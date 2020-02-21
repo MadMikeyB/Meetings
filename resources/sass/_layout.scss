@@ -1,0 +1,6 @@
+.headline {
+  @include flex-row($justify: space-between);
+  flex: 1;
+  max-height: 10rem;
+  border-bottom: 1px solid $black;
+}

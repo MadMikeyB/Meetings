@@ -1,0 +1,13 @@
+@mixin flex-row($justify:baseline, $align:baseline){
+  display: flex;
+  flex-direction: row;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-col($justify:baseline, $align:baseline){
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+}

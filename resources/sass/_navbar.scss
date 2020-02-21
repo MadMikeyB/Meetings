@@ -1,0 +1,41 @@
+.navbar {
+  @include flex-col($align:stretch);
+  width: 15%;
+  height: 100%;
+  max-width: 25rem;
+  background-color: $orange;
+  color: $white;
+
+  & > * {
+    &:not(:first-child) {
+      border-top: 1px solid $white;
+    }
+  }
+
+  &__top {
+    width: 100%;
+    min-height: 10rem;
+  }
+
+  &__item {
+    @include flex-col($justify: center);
+    padding: 2rem;
+
+    &--small{
+      padding: 1rem 2rem;
+      background-color: $orange;
+      color: $white;
+    }
+  }
+
+  &__link {
+    color: $white;
+    text-decoration: none;
+  }
+
+  &__bottom {
+    margin-top: auto;
+    padding: 2rem;
+  }
+
+}
