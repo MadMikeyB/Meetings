@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::namespace("Api")->name("api.")->group(function() {
     Route::apiResource('company', 'CompanyController');
     Route::apiResource('meeting', 'MeetingController');
     Route::apiResource('agendaitem', 'AgendaItemController');
@@ -29,3 +31,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::apiResource('note', 'NoteController');
     Route::apiResource('objective', 'ObjectiveController');
     Route::apiResource('token', 'TokenController');
+});
