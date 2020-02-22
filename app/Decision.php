@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Decision extends Model
+class Decision extends UuidModel
 {
     //
 }

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Expectation extends Model
+class Expectation extends UuidModel
 {
     //
 }

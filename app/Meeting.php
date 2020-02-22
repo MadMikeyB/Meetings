@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Meeting extends Model
+class Meeting extends UuidModel
 {
     //
 }

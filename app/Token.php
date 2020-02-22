@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Token extends Model
+class Token extends UuidModel
 {
     //
 }

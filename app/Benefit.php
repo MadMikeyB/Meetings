@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Benefit extends Model
+class Benefit extends UuidModel
 {
     //
 }

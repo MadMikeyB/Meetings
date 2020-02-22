@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Day extends Model
+class Day extends UuidModel
 {
     //
 }

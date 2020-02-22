@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class NextStep extends Model
+class NextStep extends UuidModel
 {
     //
 }

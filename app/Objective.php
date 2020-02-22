@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use UuidModel;
 
-class Objective extends Model
+class Objective extends UuidModel
 {
     //
 }
