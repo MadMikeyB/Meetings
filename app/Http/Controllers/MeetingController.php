@@ -82,4 +82,13 @@ class MeetingController extends Controller
     {
         //
     }
+
+    public function newPlan() {
+      
+    }
+
+
+
+
+
 }
