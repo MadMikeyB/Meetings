@@ -12,11 +12,10 @@
   <div class="card list-group list-group--flush tab-body-bar" controlled-by="next-steps-tab">
     @for($i = 0; $i < 3; $i++)
     <div tab-index="{{$i}}" class="tab-body {{ $i == 0 ? 'active':''}}">
-    @foreach($meetings as $meeting)
+    @foreach($nextsteps as $nextstep)
       <div class="next-step list-group__item">
-        @foreach($meeting as $key => $value)
-          <span>{{$i}}'s '{{$key}}:{{$value}}</span>
-        @endforeach
+        {{ $nextstep->description }}
+        {{ $nextstep->completed_by_date }}
       </div>
     @endforeach
     </div>

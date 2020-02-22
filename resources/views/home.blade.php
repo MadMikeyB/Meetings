@@ -3,6 +3,7 @@
 @section('title', 'Dashboard')
 
 @php
+/*
 $meetings = [];
 
 for($i = 0; $i < 10; $i++) {
@@ -14,8 +15,7 @@ for($i = 0; $i < 10; $i++) {
     "time" => "Time ".$i,
   ];
 }
-
-
+*/
 @endphp
 
 @section('headline')
@@ -27,4 +27,5 @@ for($i = 0; $i < 10; $i++) {
   @include('includes.my_meetings')
   @include('includes.my_next_steps')
 </div>
+
 @endsection

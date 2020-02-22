@@ -14,9 +14,8 @@
     <div tab-index="{{$i}}" class="tab-body {{ $i == 0 ? 'active':''}}">
     @foreach($meetings as $meeting)
       <div class="meeting list-group__item">
-        @foreach($meeting as $key => $value)
-          <span>{{$i}}'s '{{$key}}:{{$value}}</span>
-        @endforeach
+        {{ $meeting->name }}
+        {{ $meeting->location }}
       </div>
     @endforeach
     </div>
