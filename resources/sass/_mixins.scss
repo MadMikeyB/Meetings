@@ -1,11 +1,12 @@
-@mixin flex-row($justify:baseline, $align:baseline){
+@mixin flex-row($justify:initial, $align:initial, $wrap: initial){
   display: flex;
   flex-direction: row;
   justify-content: $justify;
   align-items: $align;
+  flex-wrap: $wrap;
 }
 
-@mixin flex-col($justify:baseline, $align:baseline){
+@mixin flex-col($justify:initial, $align:initial){
   display: flex;
   flex-direction: column;
   justify-content: $justify;

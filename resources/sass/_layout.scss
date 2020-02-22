@@ -1,6 +1,18 @@
+
+.container {
+  width: 95%;
+  max-width: 992px;
+  margin: 0 auto;
+}
+
+
 .headline {
-  @include flex-row($justify: space-between);
-  flex: 1;
+  @include flex-row(space-between, center);
+  //flex: 1;
   max-height: 10rem;
   border-bottom: 1px solid $black;
+
+  & + * {
+    overflow-y: scroll;
+  }
 }

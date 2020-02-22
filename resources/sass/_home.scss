@@ -1,0 +1,42 @@
+.tab-sort-filter {
+  @include flex-row(space-between, baseline, wrap);
+
+  &__tabs,
+  &__sorts-filters {
+    @include flex-row;
+
+    & > div {
+      padding: 0.5rem 1rem;
+      border: 1px solid $black;
+      border-radius: 0.5rem;
+    }
+  }
+
+  &__tabs {
+    margin-left: 1rem;
+    margin-top: auto;
+    & > div {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.tab-bar {
+      position: relative;
+      top: 1px;
+      .tab.active {
+        border-bottom: 1px solid $white;
+      }
+    }
+
+  }
+
+  &__sorts-filters {
+    margin-bottom: 0.5rem;
+  }
+
+  .card {
+    flex: 1;
+    min-width: 99%;
+  }
+}
