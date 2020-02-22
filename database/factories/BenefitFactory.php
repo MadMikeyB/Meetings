@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Benefit::class, function (Faker $faker) {
     return [
+      'description' => $faker->realText(20),
         //
     ];
 });

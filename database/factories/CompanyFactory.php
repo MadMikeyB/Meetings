@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Company::class, function (Faker $faker) {
     return [
-        //
+      'name' => $faker->realText(20),
+      'logo_path' => 'https://placekitten.com/200/200',
     ];
 });
