@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/plan', 'MeetingController@newPlan');
+
 //Route::resource('company', 'CompanyController');
 //Route::resource('meeting', 'MeetingController');
 //Route::resource('agendaitem', 'AgendaItemController');
