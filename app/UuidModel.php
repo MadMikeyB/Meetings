@@ -2,18 +2,16 @@
 
 namespace App;
 
-use UuidModel;
-use Ramsey\Uuid\Uuid
+use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
-class UuidModel extends UuidModel
+class UuidModel extends Model
 {
-  protected $primaryKey = 'uuid';
-  protected $keyType = 'string';
-  public $incrememnting = false;
-  protected statuc function boot() {
+  public $incrementing = false;
+  protected static function boot() {
     parent::boot();
     static::creating(function (Model $model) {
-      $model->setAttribute($model->getKeyName(), Uuid::uuid4())
+      $model->setAttribute($model->getKeyName(), Uuid::uuid4());
     });
   }
 }

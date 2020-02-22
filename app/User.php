@@ -5,14 +5,15 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'uuid';
+    //protected $primaryKey = 'uuid';
 
-    protected $keyType = 'string';
+    //protected $keyType = 'string';
 
     public $incrementing = false;
 
@@ -20,7 +21,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function (Model $model) {
+        static::creating(function (User $model) {
             $model->setAttribute($model->getKeyName(), Uuid::uuid4());
         });
     }
