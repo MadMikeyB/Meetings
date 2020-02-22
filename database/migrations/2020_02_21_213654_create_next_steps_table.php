@@ -14,7 +14,7 @@ class CreateNextStepsTable extends Migration
     public function up()
     {
         Schema::create('next_steps', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ class CreateBenefitsTable extends Migration
     public function up()
     {
         Schema::create('benefits', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }

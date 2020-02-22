@@ -14,7 +14,7 @@ class CreateMeetingsTable extends Migration
     public function up()
     {
         Schema::create('meetings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }

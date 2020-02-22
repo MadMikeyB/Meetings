@@ -14,7 +14,7 @@ class CreateConcernsTable extends Migration
     public function up()
     {
         Schema::create('concerns', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }

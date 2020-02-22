@@ -14,7 +14,7 @@ class CreateAttendeesTable extends Migration
     public function up()
     {
         Schema::create('attendees', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }

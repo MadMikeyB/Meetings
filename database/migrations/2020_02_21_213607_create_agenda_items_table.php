@@ -14,7 +14,7 @@ class CreateAgendaItemsTable extends Migration
     public function up()
     {
         Schema::create('agenda_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id');
             $table->timestamps();
         });
     }
