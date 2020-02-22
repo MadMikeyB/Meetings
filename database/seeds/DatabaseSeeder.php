@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
   /**
@@ -19,10 +20,23 @@ class DatabaseSeeder extends Seeder
           ->each(function($user) {
             factory(App\Meeting::Class, 3)
               ->create(['user_id' => $user->id])->each(function($meeting) {
-                $benefits = factory(App\Benefit::class, 3)->create(['meeting_id' => $meeting->id]);
-                $concerns = factory(App\Concern::class, 3)->create(['meeting_id' => $meeting->id]);
-                $decisions = factory(App\Decision::class, 3)->create(['meeting_id' => $meeting->id]);
-                $notes = factory(App\Note::class, 3)->create(['meeting_id' => $meeting->id]);
+                $benefits = factory(App\Benefit::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
+                $concerns = factory(App\Concern::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
+                $decisions = factory(App\Decision::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
+                $notes = factory(App\Note::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
+                $nextsteps = factory(App\NextStep::class, 3)->create([
+                  'user_id' => App\User::all()->random()->id,
+                  'meeting_id' => $meeting->id,
+                ]);
+
 
               });
           });
