@@ -3,9 +3,29 @@
 @php
 
 $bigLinks = [
-  'Plan a meeting' => '/meeting/create',
-  'Run a meeting' => '/meeting/create',
-  'Review a meeting' => '/meeting/create',
+  'Plan a meeting' => [
+    'url' => '/plan',
+    'smalls' => [
+      'Details' => '#',
+      'Attendees' => '#',
+      'Objectives' => '#',
+      'Agenda' => '#',
+      'Summary' => '#',
+    ],
+  ],
+  'Run a meeting' => [
+    'url' => '/run'
+  ],
+  'Review a meeting' => [
+    'url' => '/review',
+    'smalls' => [
+      'Details' => '#',
+      'Objectives and expectations' => '#',
+      'Benefits and concerns' => '#',
+      'Decisions and notes' => '#',
+      'Next steps' => '#',
+    ],
+  ],
 ];
 
 $smallLinks = [
@@ -25,9 +45,18 @@ $smallLinks = [
   <div class="navbar__links">
     @foreach($bigLinks as $text => $link)
       <div class="navbar__item">
-        <a class="navbar__link" href="{{ $link }}">
+        <a class="navbar__link" href="{{ $link['url'] }}">
           {{ $text }}
         </a>
+        @if(isset($link['smalls']))
+        @foreach($link['smalls'] as $smallText => $smallLink)
+          <div class="navbar__item navbar__item--small">
+            <a class="navbar__link" href="{{ $smallLink }}">
+              {{ $smallText }}
+            </a>
+          </div>
+        @endforeach
+        @endif
       </div>
     @endforeach
     @foreach($smallLinks as $text => $link)
@@ -43,6 +72,9 @@ $smallLinks = [
   </div>
 </nav>
 <main>
+<div class="headline">
+@yield('headline')
+</div>
 @yield('main')
 </main>
 @endsection
