@@ -49523,9 +49523,11 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
+/*
+const app = new Vue({
+    el: '#app',
 });
+*/
 
 /***/ }),
 
@@ -49643,6 +49645,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/scripts.js":
+/*!*********************************!*\
+  !*** ./resources/js/scripts.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// Super simple tabbing
+$(".tab-bar").on("click", ".tab", function (e) {
+  var bar = $(this).parents(".tab-bar"); // Get the tab bar
+
+  var c = $(bar).attr("id"); // Get its ID
+
+  var i = $(this).attr("tab-index"); // Get the index of the selected tab
+
+  var controllees = $("[controlled-by=" + c + "]"); // Get the tab bodies controlled by this bar
+  // Remove all instances of the class "active" and reapply only to the relevant tab body
+
+  $(this).siblings().removeClass("active");
+  $(this).addClass("active");
+  $(controllees).find(".tab-body").removeClass("active");
+  $(controllees).find(".tab-body[tab-index=" + i + "]").addClass("active");
+});
+$(document).ready(function () {
+  console.log("Hello world!");
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49655,13 +49686,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!***************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/scripts.js ./resources/sass/app.scss ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/jack/Sites/Meetings/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /Users/jack/Sites/Meetings/resources/js/scripts.js */"./resources/js/scripts.js");
 module.exports = __webpack_require__(/*! /Users/jack/Sites/Meetings/resources/sass/app.scss */"./resources/sass/app.scss");
 
 

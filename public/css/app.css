@@ -10,34 +10,45 @@ body {
 body {
   display: flex;
   flex-direction: row;
-  justify-content: baseline;
-  align-items: baseline;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
   font-family: sans-serif;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: initial;
   align-items: stretch;
   flex: 1;
   height: 100%;
+}
+
+.container {
+  width: 95%;
+  max-width: 992px;
+  margin: 0 auto;
 }
 
 .headline {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
-  flex: 1;
+  align-items: center;
+  flex-wrap: initial;
   max-height: 10rem;
   border-bottom: 1px solid #000000;
+}
+
+.headline + * {
+  overflow-y: scroll;
 }
 
 .navbar {
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: initial;
   align-items: stretch;
   width: 15%;
   height: 100%;
@@ -59,7 +70,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: baseline;
+  align-items: initial;
   padding: 2rem;
 }
 
@@ -77,5 +88,96 @@ main {
 .navbar__bottom {
   margin-top: auto;
   padding: 2rem;
+}
+
+.card {
+  border: 1px solid #000000;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.list-group--flush.card {
+  padding: 0;
+}
+
+.list-group__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+  padding: 1rem;
+}
+
+.list-group__item:not(:first-child) {
+  border-top: 1px solid #000000;
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.tab-body {
+  display: none;
+}
+
+.tab-body.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
+.tab-sort-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.tab-sort-filter__tabs,
+.tab-sort-filter__sorts-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter__tabs > div,
+.tab-sort-filter__sorts-filters > div {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+}
+
+.tab-sort-filter__tabs {
+  margin-left: 1rem;
+  margin-top: auto;
+}
+
+.tab-sort-filter__tabs > div {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.tab-sort-filter__tabs.tab-bar {
+  position: relative;
+  top: 1px;
+}
+
+.tab-sort-filter__tabs.tab-bar .tab.active {
+  border-bottom: 1px solid #ffffff;
+}
+
+.tab-sort-filter__sorts-filters {
+  margin-bottom: 0.5rem;
+}
+
+.tab-sort-filter .card {
+  flex: 1;
+  min-width: 99%;
 }
 
