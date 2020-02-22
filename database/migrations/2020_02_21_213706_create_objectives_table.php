@@ -15,6 +15,9 @@ class CreateObjectivesTable extends Migration
     {
         Schema::create('objectives', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->text('description');
+            $table->integer('percent_done')->default(0);
             $table->timestamps();
         });
     }

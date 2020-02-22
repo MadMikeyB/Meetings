@@ -15,6 +15,8 @@ class CreateBenefitsTable extends Migration
     {
         Schema::create('benefits', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->text('description');
             $table->timestamps();
         });
     }

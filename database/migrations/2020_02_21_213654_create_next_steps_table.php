@@ -15,6 +15,10 @@ class CreateNextStepsTable extends Migration
     {
         Schema::create('next_steps', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->uuid('user_id');
+            $table->text('description');
+            $table->text('completed_by_date');
             $table->timestamps();
         });
     }

@@ -15,6 +15,8 @@ class CreateDecisionsTable extends Migration
     {
         Schema::create('decisions', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->text('description');
             $table->timestamps();
         });
     }

@@ -15,7 +15,14 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('user_id');
+            $table->uuid('cocreator_id');
             $table->timestamps();
+            $table->text('name');
+            $table->text('series')->nullable();
+            $table->text('location');
+            $table->text('room')->nullable();
+            $table->text('additional_info')->nullable();
         });
     }
 

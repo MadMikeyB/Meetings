@@ -15,7 +15,14 @@ class CreateAgendaItemsTable extends Migration
     {
         Schema::create('agenda_items', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->uuid('leader_id');
             $table->timestamps();
+            $table->integer('type')->comment("See class definition for what the integer means");
+            $table->text('name');
+            $table->text('additional');
+            $table->integer('expected_number_of_minutes');
+            $table->integer('actual_number_of_minutes')->default(0);
         });
     }
 

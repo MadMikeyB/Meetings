@@ -15,6 +15,8 @@ class CreateConcernsTable extends Migration
     {
         Schema::create('concerns', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->text('description');
             $table->timestamps();
         });
     }

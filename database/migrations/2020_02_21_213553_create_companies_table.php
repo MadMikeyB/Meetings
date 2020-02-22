@@ -16,6 +16,8 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->uuid('id');
             $table->timestamps();
+            $table->text('name');
+            $table->text('logo_path');
         });
     }
 

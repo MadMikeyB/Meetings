@@ -15,6 +15,9 @@ class CreateAttendeesTable extends Migration
     {
         Schema::create('attendees', function (Blueprint $table) {
             $table->uuid('id');
+            $table->uuid('meeting_id');
+            $table->uuid('user_id')->nullable();
+            $table->text('email')->nullable();
             $table->timestamps();
         });
     }
