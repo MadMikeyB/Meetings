@@ -10,7 +10,12 @@ class Day extends UuidModel
     'meeting_id',
     'start_at',
     'end_at'
-  ]
+  ];
+
+  protected $casts = [
+    'start_at' => 'datetime',
+    'end_at' => 'datetime'
+  ];
 
   public function meeting() {
     return $this->belongsTo(Meeting::class);

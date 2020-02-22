@@ -11,10 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    //protected $primaryKey = 'uuid';
-
-    //protected $keyType = 'string';
-
     public $incrementing = false;
 
     protected static function boot()

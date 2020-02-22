@@ -11,7 +11,11 @@ class NextStep extends UuidModel
     'meeting_id',
     'description',
     'completed_by_date',
-  ]
+  ];
+
+  protected $casts = [
+    'completed_by_date' => 'datetime',
+  ];
 
   public function meeting() {
     return $this->belongsTo(Meeting::class);
