@@ -11,26 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-  return redirect('/home');
+Route::get('', function () {
+  return redirect('home');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
 
-Route::get('/plan', 'MeetingController@newPlan');
+Route::get('plan', 'MeetingController@newPlan');
 
-//Route::resource('company', 'CompanyController');
-//Route::resource('meeting', 'MeetingController');
-//Route::resource('agendaitem', 'AgendaItemController');
-//Route::resource('attendee', 'AttendeeController');
-//Route::resource('benefit', 'BenefitController');
-//Route::resource('concern', 'ConcernController');
-//Route::resource('day', 'DayController');
-//Route::resource('decision', 'DecisionController');
-//Route::resource('expectation', 'ExpectationController');
-//Route::resource('nextstep', 'NextStepController');
-//Route::resource('note', 'NoteController');
-//Route::resource('objective', 'ObjectiveController');
-//Route::resource('token', 'TokenController');
+
+Route::prefix('ajax')->group(function() {
+  Route::get('my_meetings', 'AjaxController@meetings');
+});
