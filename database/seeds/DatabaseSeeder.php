@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+use Ramsey\Uuid\Uuid;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,15 +33,28 @@ class DatabaseSeeder extends Seeder
                 $notes = factory(App\Note::class, 3)->create([
                   'meeting_id' => $meeting->id
                 ]);
+                $objectives = factory(App\Objective::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
+                $expectations = factory(App\Expectation::class, 3)->create([
+                  'meeting_id' => $meeting->id
+                ]);
                 $nextsteps = factory(App\NextStep::class, 3)->create([
                   'user_id' => App\User::all()->random()->id,
                   'meeting_id' => $meeting->id,
                 ]);
-
-
               });
           });
       });
+
+    $me = factory(App\User::class)->create([
+      'company_id' => App\Company::all()->random()->id,
+      'name' => 'Jack Ellis',
+      'email' => 'jackellis1504@gmail.com',
+      'password' => bcrypt(12345678),
+    ]);
+
+
 
     //$agenda_items = factory(App\AgendaItem::class)->create();
     // $this->call(UsersTableSeeder::class);

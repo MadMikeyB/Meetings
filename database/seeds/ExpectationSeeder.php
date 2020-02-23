@@ -11,6 +11,7 @@ class ExpectationSeeder extends Seeder
      */
     public function run()
     {
+      'description' => $faker->realText(20),
         //
     }
 }

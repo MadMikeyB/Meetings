@@ -19,6 +19,7 @@ class CreateNextStepsTable extends Migration
             $table->uuid('user_id');
             $table->text('description');
             $table->text('completed_by_date');
+            $table->boolean('is_complete')->default(false);
             $table->timestamps();
         });
     }
