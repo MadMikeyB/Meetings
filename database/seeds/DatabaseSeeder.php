@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
+
     $companies = factory(App\Company::class, 5)
       ->create()
       ->each(function ($company) {
@@ -21,6 +22,15 @@ class DatabaseSeeder extends Seeder
           ->each(function($user) {
             factory(App\Meeting::Class, 3)
               ->create(['user_id' => $user->id])->each(function($meeting) {
+                $days = factory(App\Day::class, 2)->create([
+                  'meeting_id' => $meeting->id,
+                ])->each(function($day) {
+                  $items = factory(App\AgendaItem::class, 5)->create([
+                    'day_id' => $day->id,
+                    'leader_id' => App\User::all()->random()->id,
+                    'position' => 0,
+                  ]);
+                });
                 $benefits = factory(App\Benefit::class, 3)->create([
                   'meeting_id' => $meeting->id
                 ]);
