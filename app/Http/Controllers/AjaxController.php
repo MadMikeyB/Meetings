@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Meeting;
 use App\NextStep;
+use Ramsey\Uuid\Uuid;
 
 class AjaxController extends Controller
 {
@@ -37,6 +38,16 @@ class AjaxController extends Controller
       ])
     );
   }
+
+  public function plan_add_day()
+  {
+    return view(
+      'includes.plan-day',
+      ['uuid' => Uuid::uuid4()->toString()]
+    );
+  }
+
+
 
   public function run_choose_meetings(Request $request)
   {
