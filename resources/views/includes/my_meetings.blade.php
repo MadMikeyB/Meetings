@@ -6,11 +6,15 @@ $filter_type = $params['meeting']['filter'] ?? [];
 
 <h2>My Meetings</h2>
 <div class="tab-sort-filter">
+  @if(count($meetings) > 1)
   <span class="tab-sort-filter__tabs tab-bar" id="meetings-tab">
     @foreach($meetings as $tab_name => $tab)
       <div class="tab {{ $loop->index==$meeting_tab?'active':''}}" tab-index="{{ $loop->index }}">{{ $tab_name }}</div>
     @endforeach
   </span>
+  @else
+  <span></span>
+  @endif
 
 
 

@@ -7,11 +7,15 @@ $filter_type = $params['next_step']['filter'] ?? [];
 
 <h2>My Next Steps</h2>
 <div class="tab-sort-filter">
+  @if(count($next_steps) > 1)
   <span class="tab-sort-filter__tabs tab-bar" id="next_steps-tab">
     @foreach($next_steps as $tab_name => $tab)
       <div class="tab {{ $loop->index==$next_step_tab?'active':''}}" tab-index="{{ $loop->index }}">{{ $tab_name }}</div>
     @endforeach
   </span>
+  @else
+  <span></span>
+  @endif
 
 
 
