@@ -227,6 +227,29 @@ fieldset {
   min-width: 99%;
 }
 
+.tab-sort-filter .list-group__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter .meeting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter .meeting__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;

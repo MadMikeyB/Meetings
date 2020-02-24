@@ -77,10 +77,17 @@ $filter_type = $params['meeting']['filter'] ?? [];
           class="tab-body {{ $loop->index == $meeting_tab?'active':'' }}">
         @forelse($tab as $meeting)
         <div class="meeting list-group__item">
-          {{ $meeting->name }}
-          {{ $meeting->location }}
-          {{ $meeting->is_draft }}
-          {{ $meeting->is_complete }}
+          <div class="meeting__left">
+            <span>{{ $meeting->name }}</span>
+            <span>{{ $meeting->series }} | {{ $meeting->user->name }}</span>
+            <span>{{ $meeting->location }}</span>
+            <span>
+              @foreach($meeting->days as $day)
+                {{ $day->date->format('d/m/Y') }}
+                {{ $day->start_at }}
+              @endforeach
+            </span>
+          </div>
           @switch($tab_name)
             @case("Upcoming Meetings")
               This meeting is still to come...
