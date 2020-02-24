@@ -23,13 +23,15 @@ $(document).ready(function() {
     $(this).siblings(".tab-sort-filter__filters").toggleClass("active");
   });
 
-  $(document).on("change", ".next-steps-ajax input", function() {
+  $(document).on("change", ".meetings-ajax input", function() {
+    console.log($(this));
     $.ajax({
       method: 'GET',
-      url: '/ajax/my_next_steps',
+      url: '/ajax/my_meetings',
       data: $("#mns-form").serialize(),
       success: function(d, ts, xhr) {
-        $(".next-steps-ajax").html(d);
+        console.log("Meetings reloaded");
+        $(".meetings-ajax .list-group.tab-body-bar").html($(d).find(".list-group.tab-body-bar").html());
       },
       error: function(x, t, e){
         $(".ajax").html(x);
@@ -39,13 +41,15 @@ $(document).ready(function() {
     });
   });
 
-  $(document).on("change", ".meetings-ajax input", function() {
+  $(document).on("change", ".next-steps-ajax input", function() {
+    console.log($(this));
     $.ajax({
       method: 'GET',
-      url: '/ajax/my_meetings',
+      url: '/ajax/my_next_steps',
       data: $("#mns-form").serialize(),
       success: function(d, ts, xhr) {
-        $(".meetings-ajax").html(d);
+        console.log("Next Steps reloaded");
+        $(".next-steps-ajax .list-group.tab-body-bar").html($(d).find(".list-group.tab-body-bar").html());
       },
       error: function(x, t, e){
         $(".ajax").html(x);
