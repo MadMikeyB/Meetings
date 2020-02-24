@@ -17,9 +17,9 @@ class CreateMeetingsTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id');
             $table->uuid('cocreator_id')->nullable();
-            $table->text('name');
+            $table->text('name')->nullable();
             $table->text('series')->nullable();
-            $table->text('location');
+            $table->text('location')->nullable();
             $table->text('room')->nullable();
             $table->text('additional')->nullable();
             $table->boolean('is_draft')->default(true);
