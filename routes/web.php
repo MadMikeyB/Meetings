@@ -12,14 +12,16 @@
 */
 
 Route::get('', function () {
-  return redirect('home');
+  return redirect('dashboard');
 });
 
 Auth::routes();
 
-Route::get('dashboard', 'HomeController@index')->name('home');
+Route::get('dashboard', 'HomeController@index')->name('dashboard');
 Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
 Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
+Route::get('contacts', 'HomeController@indexContacts')->name('contacts');
+Route::get('account', 'HomeController@accountDetails')->name('account');
 
 Route::prefix('plan')->name('plan.')->group(function() {
   foreach([
