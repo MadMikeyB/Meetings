@@ -30,8 +30,7 @@ $(document).ready(function() {
       url: '/ajax/my_meetings',
       data: $("#mns-form").serialize(),
       success: function(d, ts, xhr) {
-        console.log("Meetings reloaded");
-        $(".meetings-ajax .list-group.tab-body-bar").html($(d).find(".list-group.tab-body-bar").html());
+        $(".meetings-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
       },
       error: function(x, t, e){
         $(".ajax").html(x);
@@ -48,8 +47,7 @@ $(document).ready(function() {
       url: '/ajax/my_next_steps',
       data: $("#mns-form").serialize(),
       success: function(d, ts, xhr) {
-        console.log("Next Steps reloaded");
-        $(".next-steps-ajax .list-group.tab-body-bar").html($(d).find(".list-group.tab-body-bar").html());
+        $(".next-steps-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
       },
       error: function(x, t, e){
         $(".ajax").html(x);
