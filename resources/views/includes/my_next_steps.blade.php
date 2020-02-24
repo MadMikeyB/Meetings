@@ -4,7 +4,6 @@ $sort_type = $params['next_step']['sort'] ?? 'description_asc';
 $filter_type = $params['next_step']['filter'] ?? [];
 @endphp
 
-  <!--{{ print_r($params, true) }}-->
 
 <h2>My Next Steps</h2>
 <div class="tab-sort-filter">
@@ -73,7 +72,7 @@ $filter_type = $params['next_step']['filter'] ?? [];
           {{ $next_step->is_complete }}
         </div>
         @empty
-        <div class="meeting list-group__item">
+        <div class="next-step list-group__item">
         There are no next steps of this type
         </div>
         @endforelse

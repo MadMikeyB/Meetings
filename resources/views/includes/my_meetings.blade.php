@@ -4,8 +4,6 @@ $sort_type = $params['meeting']['sort'] ?? 'name_asc';
 $filter_type = $params['meeting']['filter'] ?? [];
 @endphp
 
-  <!--{{ $meeting_tab }}-->
-
 <h2>My Meetings</h2>
 <div class="tab-sort-filter">
   <span class="tab-sort-filter__tabs tab-bar" id="meetings-tab">
