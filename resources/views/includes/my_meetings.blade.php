@@ -88,17 +88,19 @@ $filter_type = $params['meeting']['filter'] ?? [];
               @endforeach
             </span>
           </div>
+          <div class="meeting__right">
           @switch($tab_name)
             @case("Upcoming Meetings")
-              This meeting is still to come...
+              <div class="button">Run meeting</div>
               @break
             @case("Draft Meetings")
-              This meeting is a draft...
+              <div class="button">Edit meeting</div>
               @break
             @case("Past Meetings")
-              This meeting has come to pass...
+              <div class="button">Review meeting</div>
               @break
           @endswitch 
+          </div>
         </div>
         @empty
         <div class="meeting list-group__item">

@@ -250,6 +250,14 @@ fieldset {
   align-items: initial;
 }
 
+.tab-sort-filter .meeting__right {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: center;
+  flex-wrap: initial;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;

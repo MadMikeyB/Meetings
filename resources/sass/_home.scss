@@ -71,6 +71,9 @@
     &__left {
       @include flex-col;
     }
+    &__right {
+      @include flex-row($align: center);
+    }
   }
 }
 
