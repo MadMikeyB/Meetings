@@ -33,10 +33,45 @@
 
   &__sorts-filters {
     margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  &__sort-toggle,
+  &__filter-toggle {
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+
+  &__sorts,
+  &__filters {
+    @include flex-col;
+    position: absolute;
+    top: 2.5rem;
+    right: 0;
+    background-color: $white;
+    display: none;
+
+    &.active {
+      display: flex;
+      z-index: 100;
+    }
   }
 
   .card {
     flex: 1;
     min-width: 99%;
   }
+}
+
+.dashboard {
+  @include flex-col;
+  flex: 1;
+  min-height: 1px;
+
+  [class*=ajax] + .button {
+    margin-top: 1rem;
+    margin-left: auto;
+  }
+
+
 }

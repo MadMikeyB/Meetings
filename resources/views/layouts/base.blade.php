@@ -29,10 +29,10 @@ $bigLinks = [
 ];
 
 $smallLinks = [
-  'Account dashboard' => '/meeting',
+  'Account dashboard' => '/dashboard',
   'My meetings' => '/meeting',
-  'My next steps' => '/nextstep',
-  'My details' => '/user'
+  'My next steps' => '/next_steps',
+  'My details' => '/me'
 ]
 
 @endphp
@@ -76,5 +76,6 @@ $smallLinks = [
 @yield('headline')
 </div>
 @yield('main')
+<div class="flex-fill">
 </main>
 @endsection

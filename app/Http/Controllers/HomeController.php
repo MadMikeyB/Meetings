@@ -23,15 +23,62 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+      $params = $request->all();
+
+      $params['q_limit'] = 3;
+
+      $meetings = Meeting::get_for_page($params);
+      $next_steps = NextStep::get_for_page($params);
+
       return view(
-        'home',
-        [
-          'meetings' => Meeting::all(),
-          'nextsteps' => NextStep::all(),
-          
-        ]
+        'dashboard.home',
+        compact([
+          "meetings",
+          "next_steps",
+          "params",
+        ])
+      );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function indexMeetings(Request $request)
+    {
+      $params = $request->all();
+
+      $meetings = Meeting::get_for_page($params);
+
+      return view(
+        'dashboard.meetings',
+        compact([
+          "meetings",
+          "params",
+        ])
+      );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function indexNextSteps(Request $request)
+    {
+      $params = $request->all();
+
+      $next_steps = NextStep::get_for_page($params);
+
+      return view(
+        'dashboard.next_steps',
+        compact([
+          "next_steps",
+          "params",
+        ])
       );
     }
 }

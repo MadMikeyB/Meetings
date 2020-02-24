@@ -32,3 +32,19 @@
     @include flex-col;
   }
 }
+
+
+
+.button {
+  border: 1px solid $orange;
+  border-radius: 0.5rem;
+  background-color: $orange;
+  color: $white;
+  padding: 1rem;
+  text-decoration: none;
+
+  &--light {
+    background-color: $white;
+    color: $orange;
+  }
+}
