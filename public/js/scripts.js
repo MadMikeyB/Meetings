@@ -78,4 +78,27 @@ $(document).ready(function () {
   $(document).on("click", "#next_steps-tab .tab", function () {
     $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
   });
+  $(document).on("click", "#plan-form #submit-button", function (e) {
+    e.preventDefault();
+    var m_id = $(this).attr("m_id");
+    console.log(m_id);
+    $.ajax({
+      url: "/plan/details/" + m_id,
+      data: $("#plan-form").serialize(),
+      method: "PUT",
+      success: function success(d, x, t) {
+        console.log("Success");
+        $("#ajax").html(d);
+      }
+    });
+  });
+  $(document).on("click", "#plan-form #add-day", function () {
+    $.ajax({
+      method: "GET",
+      url: "/ajax/plan_add_day",
+      success: function success(d, t, x) {
+        $(".days").last().after(d);
+      }
+    });
+  });
 });

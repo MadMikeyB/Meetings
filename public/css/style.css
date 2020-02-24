@@ -272,5 +272,21 @@ fieldset {
   margin-left: auto;
 }
 
+#plan-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
+#plan-form .label {
+  color: #f6993f;
+}
+
+#plan-form .label--large {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
 
 /*# sourceMappingURL=style.css.map*/
