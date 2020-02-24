@@ -17,12 +17,13 @@ Route::get('', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('dashboard', 'HomeController@index')->name('home');
 Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
+Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
 
 Route::get('plan', 'MeetingController@newPlan');
 
-
 Route::prefix('ajax')->group(function() {
   Route::get('my_meetings', 'AjaxController@meetings');
+  Route::get('my_next_steps', 'AjaxController@next_steps');
 });
