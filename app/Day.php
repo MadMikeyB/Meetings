@@ -14,8 +14,8 @@ class Day extends UuidModel
 
   protected $casts = [
     'date' => 'date',
-    'start_at' => 'timestamp',
-    'end_at' => 'timestamp'
+    //'start_at' => 'timestamp',
+    //'end_at' => 'timestamp'
   ];
 
   public function meeting() {

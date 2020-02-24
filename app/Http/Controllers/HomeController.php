@@ -81,4 +81,22 @@ class HomeController extends Controller
         ])
       );
     }
+
+    public function planNewMeeting()
+    {
+      $meeting = Meeting::create();
+    
+      return redirect()->route('edit_meeting', ["meeting" => $meeting->id]);
+    
+    }
+
+    public function editMeeting(Meeting $meeting)
+    {
+    
+      return view('plan.details', compact(["meeting"]));
+    
+    }
+
+
+
 }

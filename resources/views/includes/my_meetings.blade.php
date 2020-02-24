@@ -4,15 +4,17 @@ $sort_type = $params['meeting']['sort'] ?? 'name_asc';
 $filter_type = $params['meeting']['filter'] ?? [];
 @endphp
 
-  <!--{{ $meeting_tab }}-->
-
 <h2>My Meetings</h2>
 <div class="tab-sort-filter">
+  @if(count($meetings) > 1)
   <span class="tab-sort-filter__tabs tab-bar" id="meetings-tab">
     @foreach($meetings as $tab_name => $tab)
       <div class="tab {{ $loop->index==$meeting_tab?'active':''}}" tab-index="{{ $loop->index }}">{{ $tab_name }}</div>
     @endforeach
   </span>
+  @else
+  <span></span>
+  @endif
 
 
 
@@ -75,10 +77,30 @@ $filter_type = $params['meeting']['filter'] ?? [];
           class="tab-body {{ $loop->index == $meeting_tab?'active':'' }}">
         @forelse($tab as $meeting)
         <div class="meeting list-group__item">
-          {{ $meeting->name }}
-          {{ $meeting->location }}
-          {{ $meeting->is_draft }}
-          {{ $meeting->is_complete }}
+          <div class="meeting__left">
+            <span>{{ $meeting->name }}</span>
+            <span>{{ $meeting->series }} | {{ $meeting->user->name }}</span>
+            <span>{{ $meeting->location }}</span>
+            <span>
+              @foreach($meeting->days as $day)
+                {{ $day->date->format('d/m/Y') }}
+                {{ $day->start_at }}
+              @endforeach
+            </span>
+          </div>
+          <div class="meeting__right">
+          @switch($tab_name)
+            @case("Upcoming Meetings")
+              <div class="button">Run meeting</div>
+              @break
+            @case("Draft Meetings")
+              <div class="button">Edit meeting</div>
+              @break
+            @case("Past Meetings")
+              <div class="button">Review meeting</div>
+              @break
+          @endswitch 
+          </div>
         </div>
         @empty
         <div class="meeting list-group__item">

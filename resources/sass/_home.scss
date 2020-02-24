@@ -61,6 +61,20 @@
     flex: 1;
     min-width: 99%;
   }
+
+  .list-group__item {
+    @include flex-row(space-between, stretch);
+  }
+
+  .meeting {
+    @include flex-row(space-between, stretch);
+    &__left {
+      @include flex-col;
+    }
+    &__right {
+      @include flex-row($align: center);
+    }
+  }
 }
 
 .dashboard {

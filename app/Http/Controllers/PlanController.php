@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Day;
+use App\Meeting;
 use Illuminate\Http\Request;
 
-class DayController extends Controller
+class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class DayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Day  $day
+     * @param  \App\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function show(Day $day)
+    public function show(Meeting $meeting)
     {
         //
     }
@@ -52,10 +52,10 @@ class DayController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Day  $day
+     * @param  \App\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function edit(Day $day)
+    public function edit(Meeting $meeting)
     {
         //
     }
@@ -64,10 +64,10 @@ class DayController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Day  $day
+     * @param  \App\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Day $day)
+    public function update(Request $request, Meeting $meeting)
     {
         //
     }
@@ -75,10 +75,10 @@ class DayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Day  $day
+     * @param  \App\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Day $day)
+    public function destroy(Meeting $meeting)
     {
         //
     }

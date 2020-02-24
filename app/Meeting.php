@@ -13,6 +13,11 @@ class Meeting extends UuidModel
     'additional',
   ];
 
+  public function user() {
+    return $this->belongsTo(User::class);
+  }
+
+
   public function objectives() {
     return $this->hasMany(Objective::class);
   }
@@ -38,7 +43,7 @@ class Meeting extends UuidModel
 
 
   public function days() {
-    return $this->hasMany(Day::class);
+    return $this->hasMany(Day::class)->orderBy('date', 'asc');
   }
   public function agenda_items() {
     return $this->hasManyThrough(AgendaItem::class, Day::class);

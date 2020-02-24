@@ -4,15 +4,18 @@ $sort_type = $params['next_step']['sort'] ?? 'description_asc';
 $filter_type = $params['next_step']['filter'] ?? [];
 @endphp
 
-  <!--{{ print_r($params, true) }}-->
 
 <h2>My Next Steps</h2>
 <div class="tab-sort-filter">
+  @if(count($next_steps) > 1)
   <span class="tab-sort-filter__tabs tab-bar" id="next_steps-tab">
     @foreach($next_steps as $tab_name => $tab)
       <div class="tab {{ $loop->index==$next_step_tab?'active':''}}" tab-index="{{ $loop->index }}">{{ $tab_name }}</div>
     @endforeach
   </span>
+  @else
+  <span></span>
+  @endif
 
 
 
@@ -73,7 +76,7 @@ $filter_type = $params['next_step']['filter'] ?? [];
           {{ $next_step->is_complete }}
         </div>
         @empty
-        <div class="meeting list-group__item">
+        <div class="next-step list-group__item">
         There are no next steps of this type
         </div>
         @endforelse

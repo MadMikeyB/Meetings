@@ -1,0 +1,276 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
+  font-family: sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: stretch;
+  flex: 1;
+  height: 100%;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.container {
+  width: 95%;
+  max-width: 992px;
+  margin: 0 auto;
+}
+
+.headline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: initial;
+  max-height: 10rem;
+  border-bottom: 1px solid #000000;
+}
+
+.headline + * {
+  overflow-y: scroll;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: stretch;
+  width: 15%;
+  height: 100%;
+  max-width: 25rem;
+  background-color: #f6993f;
+  color: #ffffff;
+}
+
+.navbar > *:not(:first-child) {
+  border-top: 1px solid #ffffff;
+}
+
+.navbar__top {
+  width: 100%;
+  min-height: 10rem;
+}
+
+.navbar__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: initial;
+  padding: 2rem;
+}
+
+.navbar__item--small {
+  padding: 1rem 2rem;
+  background-color: #f6993f;
+  color: #ffffff;
+}
+
+.navbar__link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar__bottom {
+  margin-top: auto;
+  padding: 2rem;
+}
+
+.card {
+  border: 1px solid #000000;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.list-group--flush.card {
+  padding: 0;
+}
+
+.list-group__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+  padding: 1rem;
+}
+
+.list-group__item:not(:first-child) {
+  border-top: 1px solid #000000;
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.tab-body {
+  display: none;
+}
+
+.tab-body.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
+.button {
+  border: 1px solid #f6993f;
+  border-radius: 0.5rem;
+  background-color: #f6993f;
+  color: #ffffff;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.button--light {
+  background-color: #ffffff;
+  color: #f6993f;
+}
+
+.tab-sort-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.tab-sort-filter__tabs,
+.tab-sort-filter__sorts-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter__tabs > div,
+.tab-sort-filter__sorts-filters > div {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+}
+
+.tab-sort-filter__tabs {
+  margin-left: 1rem;
+  margin-top: auto;
+}
+
+.tab-sort-filter__tabs > div {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.tab-sort-filter__tabs.tab-bar {
+  position: relative;
+  top: 1px;
+}
+
+.tab-sort-filter__tabs.tab-bar .tab.active {
+  border-bottom: 1px solid #ffffff;
+}
+
+.tab-sort-filter__sorts-filters {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.tab-sort-filter__sort-toggle,
+.tab-sort-filter__filter-toggle {
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.tab-sort-filter__sorts,
+.tab-sort-filter__filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background-color: #ffffff;
+  display: none;
+}
+
+.tab-sort-filter__sorts.active,
+.tab-sort-filter__filters.active {
+  display: flex;
+  z-index: 100;
+}
+
+.tab-sort-filter .card {
+  flex: 1;
+  min-width: 99%;
+}
+
+.tab-sort-filter .list-group__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter .meeting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: initial;
+}
+
+.tab-sort-filter .meeting__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
+.tab-sort-filter .meeting__right {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: center;
+  flex-wrap: initial;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+  flex: 1;
+  min-height: 1px;
+}
+
+.dashboard [class*=ajax] + .button {
+  margin-top: 1rem;
+  margin-left: auto;
+}
+
+
+/*# sourceMappingURL=style.css.map*/
