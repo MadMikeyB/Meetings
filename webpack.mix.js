@@ -1,4 +1,17 @@
-const mix = require('laravel-mix');
+let mix = require('laravel-mix');
+
+let babelOpts = {
+  processCssUrls: false,
+  autoprefixer: {
+    options: {
+      grid: true,
+      browsers: [
+        'last 20 versions', // Set really far back in hopes of generating old prefixes
+        'ie 10-11'          // Getting specific
+      ]
+    }
+  }
+};
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +24,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/scripts.js' , 'public/js')
-   .js('resources/js/app.js' , 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.babel('resources/js/scripts.js' , 'public/js')
+   .options(babelOpts)
+   .sass('resources/sass/app.scss', 'public/css',  {sourceMap: true})
+   .babel('resources/js/app.js' , 'public/js')
+   .options(babelOpts);
