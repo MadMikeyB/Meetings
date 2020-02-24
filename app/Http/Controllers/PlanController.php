@@ -3,83 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Meeting;
+use App\Day;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+  public function create()
+  {
+    $new_meeting = new Meeting;
+    $new_meeting->user_id = Auth::user()->id;
+    $new_meeting->save();
+    return redirect("/plan/details/".$new_meeting->id);
+  }
+
+
+  public function details(Meeting $meeting)
+  {
+    $uuid = Uuid::uuid4()->toString();
+    return view(
+      'plan.details',
+      compact(["meeting", "uuid"])
+    );
+  }
+
+  public function details_put(Meeting $meeting, Request $request)
+  {
+    $params = $request->all();
+
+    $days = [];
+
+    foreach($params['days'] as $k => $a) {
+      foreach($a as $i => $v) {
+        $days[$i][$k] = $v;
+      }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    foreach($days as $day) {
+      $day['meeting_id'] = $meeting->id;
+      Day::updateOrCreate(['id' => $day['id']], $day);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    $meeting->update($request->all());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Meeting $meeting)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Meeting $meeting)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Meeting $meeting)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Meeting $meeting)
-    {
-        //
-    }
+  }
 }
