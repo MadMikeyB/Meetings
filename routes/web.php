@@ -24,8 +24,8 @@ Route::get('contacts', 'HomeController@indexContacts')->name('contacts');
 Route::get('account', 'HomeController@accountDetails')->name('account');
 
 Route::prefix('plan')->name('plan.')->group(function() {
+    Route::get('', 'PlanController@create')->name('create');
   foreach([
-    "new",
     "details",
     "attendees",
     "agenda",
@@ -33,6 +33,7 @@ Route::prefix('plan')->name('plan.')->group(function() {
     "summary"
   ] as $step) {
     Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
+    Route::put($step.'/{meeting}', 'PlanController@'.$step.'_put')->name($step.'_put');
   }
 });
 
@@ -45,4 +46,5 @@ Route::prefix('ajax')->group(function() {
   Route::get('my_meetings', 'AjaxController@meetings');
   Route::get('my_next_steps', 'AjaxController@next_steps');
   Route::get('my_meetings_run', 'AjaxController@run_choose_meetings');
+  Route::get('plan_add_day', 'AjaxController@plan_add_day');
 });
