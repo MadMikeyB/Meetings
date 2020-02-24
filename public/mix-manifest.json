@@ -1,5 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/scripts.js": "/js/scripts.js",
-    "/css/app.css": "/css/app.css"
+    "/css/style.css": "/css/style.css",
+    "/mix.js.map": "/mix.js.map",
+    "/css/style.css.map": "/css/style.css.map",
+    "/js/scripts.js": "/js/scripts.js"
 }
