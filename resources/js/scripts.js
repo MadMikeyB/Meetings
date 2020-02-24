@@ -83,9 +83,9 @@ $(document).ready(function() {
     $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
   });
 
-  $(document).on("click", "#plan-form #submit-button", function(e) {
+  $(document).on("change", "#plan-form input, #plan-form select", function(e) {
     e.preventDefault();
-    let m_id = $(this).attr("m_id")
+    let m_id = $("[name=id]").val();
     console.log(m_id);
     $.ajax({
       url: "/plan/details/" + m_id,
@@ -93,11 +93,10 @@ $(document).ready(function() {
       method: "PUT",
       success: function(d, x, t){
         console.log("Success");
-        $("#ajax").html(d);
+        $(".flex-fill").html(d);
       }
-    })
-  
-  })
+    });
+  });
 
   $(document).on("click", "#plan-form #add-day", function() {
     $.ajax({
@@ -106,7 +105,27 @@ $(document).ready(function() {
       success: function(d, t, x) {
         $(".days").last().after(d);
       }
-    })
-  })
+    });
+  });
+
+  $(document).on("click", "#plan-form #add-attendee", function() {
+    $.ajax({
+      method: "GET",
+      url: "/ajax/plan_add_attendee",
+      success: function(d, t, x) {
+        $(".attendees").last().after(d);
+      }
+    });
+  });
+
+  $(document).on("click", "#plan-form #add-objective", function() {
+    $.ajax({
+      method: "GET",
+      url: "/ajax/plan_add_objective",
+      success: function(d, t, x) {
+        $(".objectives").last().after(d);
+      }
+    });
+  });
 
 });

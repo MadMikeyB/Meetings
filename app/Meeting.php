@@ -17,6 +17,9 @@ class Meeting extends UuidModel
     return $this->belongsTo(User::class);
   }
 
+  public function attendees() {
+    return $this->hasMany(Attendee::class);
+  }
 
   public function objectives() {
     return $this->hasMany(Objective::class);

@@ -20,4 +20,3 @@ if(isset($day)) {
   <input type="time" name="days[start_at][]" value="{{ $start_at }}">
   <input type="time" name="days[end_at][]" value="{{ $end_at }}">
 </fieldset>
-

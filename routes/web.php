@@ -47,4 +47,6 @@ Route::prefix('ajax')->group(function() {
   Route::get('my_next_steps', 'AjaxController@next_steps');
   Route::get('my_meetings_run', 'AjaxController@run_choose_meetings');
   Route::get('plan_add_day', 'AjaxController@plan_add_day');
+  Route::get('plan_add_attendee', 'AjaxController@plan_add_attendee');
+  Route::get('plan_add_objective', 'AjaxController@plan_add_objective');
 });

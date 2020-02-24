@@ -2,11 +2,10 @@
 
 namespace App;
 
-;
-
 class Attendee extends UuidModel
 {
   protected $fillable = [
+    'meeting_id',
     'user_id',
     'email'
   ];

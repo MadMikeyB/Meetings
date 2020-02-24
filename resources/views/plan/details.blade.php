@@ -2,7 +2,11 @@
 
 @section('title', 'Plan new meeting')
 
-@section('headline', 'Plan new meeting')
+@section('plan-nav-buttons')
+<button class="button">Button</button>
+<a href="/plan/attendees/{{ $meeting->id }}" class="button">On to attendees</a>
+@endsection
+
 
 @php
 $vars = [
@@ -29,9 +33,9 @@ $vars = [
 @endforeach
 
 @forelse($meeting->days as $day)
-@include('includes.plan-day')
+@include('includes.plan.day')
 @empty
-@include('includes.plan-day')
+@include('includes.plan.day')
 @endforelse
 <span id="add-day">Add another day</span>
 @endsection

@@ -39,10 +39,32 @@ class AjaxController extends Controller
     );
   }
 
+  /*
+   *
+   *  ADDING BITS TO THE PLAN
+   *
+   */
+
   public function plan_add_day()
   {
     return view(
-      'includes.plan-day',
+      'includes.plan.day',
+      ['uuid' => Uuid::uuid4()->toString()]
+    );
+  }
+
+  public function plan_add_attendee()
+  {
+    return view(
+      'includes.plan.attendee',
+      ['uuid' => Uuid::uuid4()->toString()]
+    );
+  }
+
+  public function plan_add_objective()
+  {
+    return view(
+      'includes.plan.objective',
       ['uuid' => Uuid::uuid4()->toString()]
     );
   }

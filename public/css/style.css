@@ -288,5 +288,18 @@ fieldset {
   font-weight: 600;
 }
 
+.plan-nav-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: initial;
+  margin-left: auto;
+}
+
+.plan-nav-buttons > * {
+  margin-left: 1rem;
+}
+
 
 /*# sourceMappingURL=style.css.map*/
