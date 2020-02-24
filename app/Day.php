@@ -8,6 +8,7 @@ class Day extends UuidModel
 {
   protected $fillable = [
     'meeting_id',
+    'date',
     'start_at',
     'end_at'
   ];
