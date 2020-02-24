@@ -1,0 +1,12 @@
+#plan-form {
+  @include flex-col;
+
+  .label {
+    color: $orange;
+
+    &--large {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+  }
+}
