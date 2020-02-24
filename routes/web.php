@@ -21,6 +21,10 @@ Route::get('dashboard', 'HomeController@index')->name('home');
 Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
 Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
 
+
+Route::get('plan', 'HomeController@planNewMeeting')->name('plan_new_meeting');
+Route::get('plan/{meeting}', 'HomeController@editMeeting')->name('edit_meeting');
+
 Route::get('plan', 'MeetingController@newPlan');
 
 Route::prefix('ajax')->group(function() {
