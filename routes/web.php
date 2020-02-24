@@ -44,4 +44,5 @@ Route::prefix('run')->name('run.')->group(function() {
 Route::prefix('ajax')->group(function() {
   Route::get('my_meetings', 'AjaxController@meetings');
   Route::get('my_next_steps', 'AjaxController@next_steps');
+  Route::get('my_meetings_run', 'AjaxController@run_choose_meetings');
 });

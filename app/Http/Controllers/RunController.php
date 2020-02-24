@@ -8,16 +8,14 @@ use Illuminate\Http\Request;
 class RunController extends Controller
 {
   public function choose() {
-    $meetings = [
-      "All" => Meeting::all(),
-    ];
     $params = [];
+    $meetings = [
+      'Upcoming Meetings' => Meeting::get_for_page($params)["Upcoming Meetings"],
+    ];
 
     return view(
       "run.choose",
       compact(["meetings", "params"])
-    
-    
     );
   }
 }

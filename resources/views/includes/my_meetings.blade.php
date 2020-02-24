@@ -81,6 +81,17 @@ $filter_type = $params['meeting']['filter'] ?? [];
           {{ $meeting->location }}
           {{ $meeting->is_draft }}
           {{ $meeting->is_complete }}
+          @switch($tab_name)
+            @case("Upcoming Meetings")
+              This meeting is still to come...
+              @break
+            @case("Draft Meetings")
+              This meeting is a draft...
+              @break
+            @case("Past Meetings")
+              This meeting has come to pass...
+              @break
+          @endswitch 
         </div>
         @empty
         <div class="meeting list-group__item">

@@ -8,16 +8,11 @@
 
 @section('main')
 
-<!--
-  {{ print_r($params, true) }}
--->
-
 <form class="dashboard container"
-      id="mns-form"
+      id="run-form"
       action=""
       method="GET">
   <div class="meetings-ajax">@include('includes.my_meetings')</div>
-<input type="submit">
 </form>
 
 @endsection

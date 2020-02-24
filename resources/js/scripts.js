@@ -23,7 +23,7 @@ $(document).ready(function() {
     $(this).siblings(".tab-sort-filter__filters").toggleClass("active");
   });
 
-  $(document).on("change", ".meetings-ajax input", function() {
+  $(document).on("change", "#mns-form .meetings-ajax input", function() {
     console.log($(this));
     $.ajax({
       method: 'GET',
@@ -40,7 +40,7 @@ $(document).ready(function() {
     });
   });
 
-  $(document).on("change", ".next-steps-ajax input", function() {
+  $(document).on("change", "#mns-form .next-steps-ajax input", function() {
     console.log($(this));
     $.ajax({
       method: 'GET',
@@ -48,6 +48,23 @@ $(document).ready(function() {
       data: $("#mns-form").serialize(),
       success: function(d, ts, xhr) {
         $(".next-steps-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
+      },
+      error: function(x, t, e){
+        $(".ajax").html(x);
+        $(".ajax").append(t);
+        $(".ajax").append(e);
+      }
+    });
+  });
+
+  $(document).on("change", "#run-form .meetings-ajax input", function() {
+    console.log($(this));
+    $.ajax({
+      method: 'GET',
+      url: '/ajax/my_meetings_run',
+      data: $("#run-form").serialize(),
+      success: function(d, ts, xhr) {
+        $(".meetings-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
       },
       error: function(x, t, e){
         $(".ajax").html(x);

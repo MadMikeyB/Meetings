@@ -21,8 +21,8 @@ class AjaxController extends Controller
         "params",
       ])
     );
-
   }
+
   public function next_steps(Request $request)
   {
     $params = $request->all() ?? [];
@@ -36,6 +36,22 @@ class AjaxController extends Controller
         "params",
       ])
     );
+  }
 
+  public function run_choose_meetings(Request $request)
+  {
+    $params = $request->all() ?? [];
+
+    $meetings = [
+      "Upcoming Meetings" => Meeting::get_for_page($params)["Upcoming Meetings"],
+    ];
+
+    return view(
+      'includes.my_meetings',
+      compact([
+        "meetings",
+        "params",
+      ])
+    );
   }
 }
