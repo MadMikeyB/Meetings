@@ -21,7 +21,23 @@ Route::get('dashboard', 'HomeController@index')->name('home');
 Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
 Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
 
-Route::get('plan', 'MeetingController@newPlan');
+Route::prefix('plan')->name('plan.')->group(function() {
+  foreach([
+    "new",
+    "details",
+    "attendees",
+    "agenda",
+    "objectives",
+    "summary"
+  ] as $step) {
+    Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
+  }
+});
+
+Route::prefix('run')->name('run.')->group(function() {
+  Route::get('', 'RunController@choose')->name('choose');
+  Route::get('{meeting?}', 'RunController@run')->name('run');
+});
 
 Route::prefix('ajax')->group(function() {
   Route::get('my_meetings', 'AjaxController@meetings');
