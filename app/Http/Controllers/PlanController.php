@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
+  /*
+   *
+   *  CREATING
+   *
+   */
   public function create()
   {
     $new_meeting = new Meeting;
@@ -22,18 +27,9 @@ class PlanController extends Controller
 
   /*
    *
-   *  DETAILS
+   *  SAVING
    *
    */
-
-  public function details(Meeting $meeting)
-  {
-    $uuid = Uuid::uuid4()->toString();
-    return view(
-      'plan.details',
-      compact(["meeting", "uuid"])
-    );
-  }
 
   public function details_put(Meeting $meeting, Request $request)
   {
@@ -98,7 +94,44 @@ class PlanController extends Controller
       }
     }
 
+    if(isset($params['agenda_items'])){
+      /*
+       *  AGENDA ITEMS
+       */
+
+      $agenda_items = [];
+
+      foreach($params['agenda_items'] as $k => $a) {
+        foreach($a as $i => $v) {
+          $agenda_items[$i][$k] = $v;
+        }
+      }
+
+      dump($agenda_items);
+
+      foreach($agenda_items as $agenda_item) {
+        $agenda_item['meeting_id'] = $meeting->id;
+        AgendaItem::updateOrCreate(['id' => $agenda_item['id']], $agenda_item);
+      }
+    }
+
     $meeting->update($request->all());
+  }
+
+
+  /*
+   *
+   *  DETAILS
+   *
+   */
+
+  public function details(Meeting $meeting)
+  {
+    $uuid = Uuid::uuid4()->toString();
+    return view(
+      'plan.details',
+      compact(["meeting", "uuid"])
+    );
   }
 
   /*
@@ -127,6 +160,21 @@ class PlanController extends Controller
     $uuid = Uuid::uuid4()->toString();
     return view(
       'plan.objectives',
+      compact(["meeting", "uuid"])
+    );
+  }
+
+  /*
+   *
+   *  AGENDA
+   *
+   */
+
+  public function agenda(Meeting $meeting)
+  {
+    $uuid = Uuid::uuid4()->toString();
+    return view(
+      'plan.agenda',
       compact(["meeting", "uuid"])
     );
   }

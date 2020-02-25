@@ -4,18 +4,17 @@ namespace App;
 
 class AgendaItem extends UuidModel
 {
-  /*      - 1: Normal item
-   *      - 2: Break
-   *      - 3: Lunch
-   *      - 4: Ice-breaker
-   *      - 5: Open
-   *      - 6: Close 1
-   *      - 7: Close 2
-   *      - 8: Close 3
-   */
+//public const TYPE_NORMAL ITEM = 1;
+//public const TYPE_BREAK = 2;
+//public const TYPE_LUNCH = 3;
+//public const TYPE_ICE_BREAKER = 4;
+//public const TYPE_OPEN = 5;
+//public const TYPE_CLOSE_1 = 6;
+//public const TYPE_CLOSE_2 = 7;
+//public const TYPE_CLOSE_3 = 8;
 
-    //
   protected $fillable = [
+    'position',
     'leader_id',
     'type',
     'name',

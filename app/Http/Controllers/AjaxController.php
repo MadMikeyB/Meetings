@@ -69,6 +69,25 @@ class AjaxController extends Controller
     );
   }
 
+  public function plan_add_agenda_item(Meeting $meeting)
+  {
+    //dump($meeting);
+    $uuid = Uuid::uuid4()->toString();
+    return view(
+      'includes.plan.agenda_item',
+      compact(['uuid','meeting'])
+    );
+  }
+
+
+
+
+
+  /*
+   *
+   *  RUN
+   *
+   */
 
 
   public function run_choose_meetings(Request $request)

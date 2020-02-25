@@ -119,4 +119,18 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("click", "#plan-form #add-agenda-item", function () {
+    var m_id = $(this).attr("m-id");
+    $.ajax({
+      method: "GET",
+      url: "/ajax/plan_add_agenda_item/" + m_id,
+      success: function success(d, t, x) {
+        if ($(".agenda__items").length) {
+          $(".agenda_items").last().after(d);
+        } else {
+          $(".agenda__day").first().append(d);
+        }
+      }
+    });
+  });
 });

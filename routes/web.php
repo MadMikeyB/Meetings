@@ -49,4 +49,5 @@ Route::prefix('ajax')->group(function() {
   Route::get('plan_add_day', 'AjaxController@plan_add_day');
   Route::get('plan_add_attendee', 'AjaxController@plan_add_attendee');
   Route::get('plan_add_objective', 'AjaxController@plan_add_objective');
+  Route::get('plan_add_agenda_item/{meeting}', 'AjaxController@plan_add_agenda_item');
 });

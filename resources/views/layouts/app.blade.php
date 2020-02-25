@@ -9,12 +9,12 @@
 
     <title>@yield('title', 'Meetings')</title>
 
+    <!-- Other dependencies -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <!-- Scripts -->
-    @if(0)
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    @endif
+    @if(0) <script src="{{ asset('js/app.js') }}" defer></script> @endif
     <script src="{{ asset('js/scripts.js') }}" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 
