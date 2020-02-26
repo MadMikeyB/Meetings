@@ -1,3 +1,35 @@
+function ajaxReload(obj, selector) {
+  var method = obj.method ? obj.method : 'GET';
+  var url = obj.url;
+  var async = obj.async ? obj.async : true;
+  var user = obj.user ? obj.user : null;
+  var password = obj.password ? obj.password : null;
+  var x = new XMLHttpRequest();
+
+  x.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var d = document.createElement("div");
+      d.innerHTML = x.responseText;
+      console.log(x);
+      document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
+      return true;
+    } else if (this.status != 200) {
+      console.log(this.responseText);
+      return false;
+    }
+  };
+
+  x.open(method, url, async, user, password);
+
+  if (method == 'POST') {
+    x.send(obj.data);
+  } else {
+    x.send();
+  }
+
+  return null;
+}
+
 $(document).ready(function () {
   // Super simple tabbing
   $(document).on("click", ".tab-bar .tab", function (e) {
@@ -25,39 +57,19 @@ $(document).ready(function () {
     $(this).siblings(".tab-sort-filter__filters").toggleClass("active");
   });
   $(document).on("change", "#mns-form .meetings-ajax input", function () {
-    console.log($(this));
-    $.ajax({
-      method: 'GET',
-      url: '/ajax/my_meetings',
-      data: $("#mns-form").serialize(),
-      success: function success(d, ts, xhr) {
-        $(".meetings-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
-      },
-      error: function error(x, t, e) {
-        $(".ajax").html(x);
-        $(".ajax").append(t);
-        $(".ajax").append(e);
-      }
-    });
+    //console.log($(this));
+    ajaxReload({
+      url: "/ajax/my_meetings?" + $("#mns-form").serialize()
+    }, ".mns-meeting-list");
   });
   $(document).on("change", "#mns-form .next-steps-ajax input", function () {
-    console.log($(this));
-    $.ajax({
-      method: 'GET',
-      url: '/ajax/my_next_steps',
-      data: $("#mns-form").serialize(),
-      success: function success(d, ts, xhr) {
-        $(".next-steps-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
-      },
-      error: function error(x, t, e) {
-        $(".ajax").html(x);
-        $(".ajax").append(t);
-        $(".ajax").append(e);
-      }
-    });
+    //console.log($(this));
+    ajaxReload({
+      url: "/ajax/my_next_steps?" + $("#mns-form").serialize()
+    }, ".mns-next-step-list");
   });
   $(document).on("change", "#run-form .meetings-ajax input", function () {
-    console.log($(this));
+    //console.log($(this));
     $.ajax({
       method: 'GET',
       url: '/ajax/my_meetings_run',
