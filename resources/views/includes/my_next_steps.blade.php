@@ -66,7 +66,7 @@ $filter_type = $params['next_step']['filter'] ?? [];
 
 
   <!-- Displaying -->
-  <div class="card list-group list-group--flush tab-body-bar" controlled-by="next_steps-tab">
+  <div class="mns-next-step-list card list-group list-group--flush tab-body-bar" controlled-by="next_steps-tab">
     @foreach($next_steps as $tab_name => $tab)
       <div tab-index="{{ $loop->index }}"
           class="tab-body {{ $loop->index == $next_step_tab?'active':'' }}">

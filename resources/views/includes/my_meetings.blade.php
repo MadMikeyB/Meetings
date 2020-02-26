@@ -71,7 +71,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
 
 
   <!-- Displaying -->
-  <div class="card list-group list-group--flush tab-body-bar" controlled-by="meetings-tab">
+  <div class="mns-meeting-list card list-group list-group--flush tab-body-bar" controlled-by="meetings-tab">
     @foreach($meetings as $tab_name => $tab)
       <div tab-index="{{ $loop->index }}"
           class="tab-body {{ $loop->index == $meeting_tab?'active':'' }}">
