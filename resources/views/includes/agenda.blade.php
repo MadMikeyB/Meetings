@@ -11,4 +11,5 @@
       {{ $item->expected_number_of_minutes }}
     </div>
   @endforeach
+</div>
 @endforeach
