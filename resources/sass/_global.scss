@@ -22,3 +22,30 @@ fieldset {
   margin: 0;
   border: none;
 }
+
+
+@for $i from 1 through 100 {
+  .p-#{$i} {
+    padding: #{$i / 10}rem;
+  }
+  .px-#{$i} {
+    padding-left: #{$i / 10}rem;
+    padding-right: #{$i / 10}rem;
+  }
+  .py-#{$i} {
+    padding-top: #{$i / 10}rem;
+    padding-bottom: #{$i / 10}rem;
+  }
+  .pt-#{$i} {
+    padding-top: #{$i / 10}rem;
+  }
+  .pr-#{$i} {
+    padding-right: #{$i / 10}rem;
+  }
+  .pb-#{$i} {
+    padding-bottom: #{$i / 10}rem;
+  }
+  .pl-#{$i} {
+    padding-left: #{$i / 10}rem;
+  }
+}

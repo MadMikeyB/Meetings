@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.head')
 
 @php
 
 $bigLinks = [
   'Plan a meeting' => [
+    'routenameprefix' => 'plan.',
     'url' => '/plan',
     'smalls' => [
       'Details' => '#',
@@ -14,9 +15,11 @@ $bigLinks = [
     ],
   ],
   'Run a meeting' => [
+    'routenameprefix' => 'run.',
     'url' => '/run'
   ],
   'Review a meeting' => [
+    'routenameprefix' => 'review.',
     'url' => '/review',
     'smalls' => [
       'Details' => '#',
@@ -32,7 +35,8 @@ $smallLinks = [
   'Account dashboard' => '/dashboard',
   'My meetings' => '/meetings',
   'My next steps' => '/next_steps',
-  'My details' => '/me'
+  'My contacts' => '/contacts',
+  'My details' => '/account'
 ]
 
 @endphp
@@ -48,7 +52,7 @@ $smallLinks = [
         <a class="navbar__link" href="{{ $link['url'] }}">
           {{ $text }}
         </a>
-        @if(isset($link['smalls']))
+        @if(isset($link['smalls']) && (strpos(Route::currentRouteName(), $link['routenameprefix']) === 0))
         @foreach($link['smalls'] as $smallText => $smallLink)
           <div class="navbar__item navbar__item--small">
             <a class="navbar__link" href="{{ $smallLink }}">

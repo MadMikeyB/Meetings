@@ -31,7 +31,7 @@ class PlanController extends Controller
    *
    */
 
-  public function details_put(Meeting $meeting, Request $request)
+  public function save(Meeting $meeting, Request $request)
   {
     $params = $request->all();
 

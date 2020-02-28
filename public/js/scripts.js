@@ -30,6 +30,34 @@ function ajaxReload(obj, selector) {
   return null;
 }
 
+function ajaxCall(obj) {
+  var method = obj.method ? obj.method : 'GET';
+  var url = obj.url;
+  var async = obj.async ? obj.async : true;
+  var user = obj.user ? obj.user : null;
+  var password = obj.password ? obj.password : null;
+  var x = new XMLHttpRequest();
+
+  x.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      return x;
+    } else if (this.status != 200) {
+      console.error(this.responseText);
+      return null;
+    }
+  };
+
+  x.open(method, url, async, user, password);
+
+  if (method == 'POST') {
+    x.send(obj.data);
+  } else {
+    x.send();
+  }
+
+  return null;
+}
+
 $(document).ready(function () {
   // Super simple tabbing
   $(document).on("click", ".tab-bar .tab", function (e) {
@@ -90,12 +118,12 @@ $(document).ready(function () {
   $(document).on("click", "#next_steps-tab .tab", function () {
     $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
   });
-  $(document).on("change", "#plan-form input, #plan-form select", function (e) {
+  $("#plan-form").on("change", "input, select, textarea", function (e) {
     e.preventDefault();
     var m_id = $("[name=id]").val();
     console.log(m_id);
     $.ajax({
-      url: "/plan/details/" + m_id,
+      url: "/plan/save/" + m_id,
       data: $("#plan-form").serialize(),
       method: "PUT",
       success: function success(d, x, t) {

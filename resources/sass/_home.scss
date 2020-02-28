@@ -24,10 +24,11 @@
 
   &__tabs {
     margin-top: auto;
-    & > div {
+    & > .tab {
       border-bottom: none;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      padding: 1rem;
     }
 
     &.tab-bar {
@@ -98,14 +99,25 @@
     @include flex-row(space-between, stretch);
   }
 
-  .meeting {
+  .meeting, .next-step {
     @include flex-row(space-between, stretch);
+    &__left,
+    &__right {
+      flex: 1;
+      min-width: 1px;
+    }
+
     &__left {
-      @include flex-col;
+      @include flex-col(space-between);
+      max-width: 40%;
     }
     &__right {
-      @include flex-row($align: center);
+      @include flex-row(flex-end, center);
     }
+  }
+
+  .tab-body-bar {
+    border-top-left-radius: 0;
   }
 }
 
