@@ -90,12 +90,12 @@ $(document).ready(function () {
   $(document).on("click", "#next_steps-tab .tab", function () {
     $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
   });
-  $(document).on("change", "#plan-form input, #plan-form select", function (e) {
+  $("#plan-form").on("change", "input, select, textarea", function (e) {
     e.preventDefault();
     var m_id = $("[name=id]").val();
     console.log(m_id);
     $.ajax({
-      url: "/plan/details/" + m_id,
+      url: "/plan/save/" + m_id,
       data: $("#plan-form").serialize(),
       method: "PUT",
       success: function success(d, x, t) {

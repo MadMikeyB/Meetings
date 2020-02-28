@@ -17,11 +17,15 @@ Route::get('', function () {
 
 Auth::routes();
 
-Route::get('dashboard', 'HomeController@index')->name('dashboard');
-Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
-Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
-Route::get('contacts', 'HomeController@indexContacts')->name('contacts');
-Route::get('account', 'HomeController@accountDetails')->name('account');
+Route::name('home.')->group(function() {
+  Route::get('dashboard', 'HomeController@index')->name('dashboard');
+  Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
+  Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
+  Route::get('contacts', 'HomeController@indexContacts')->name('contacts');
+  Route::get('account', 'HomeController@accountDetails')->name('account');
+  Route::name('help.')->group(function() {
+  });
+});
 
 Route::prefix('plan')->name('plan.')->group(function() {
     Route::get('', 'PlanController@create')->name('create');
@@ -33,8 +37,8 @@ Route::prefix('plan')->name('plan.')->group(function() {
     "summary"
   ] as $step) {
     Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
-    Route::put($step.'/{meeting}', 'PlanController@'.$step.'_put')->name($step.'_put');
   }
+    Route::put('save/{meeting}', 'PlanController@save')->name('save');
 });
 
 Route::prefix('run')->name('run.')->group(function() {
