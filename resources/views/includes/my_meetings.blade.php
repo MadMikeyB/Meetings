@@ -78,14 +78,22 @@ $filter_type = $params['meeting']['filter'] ?? [];
         @forelse($tab as $meeting)
         <div class="meeting list-group__item">
           <div class="meeting__left">
-            <span>{{ $meeting->name }}</span>
-            <span>{{ $meeting->series }} | {{ $meeting->user->name }}</span>
-            <span>{{ $meeting->location }}</span>
+            <span class="{{ !isset($meeting->name) ? 'text-muted' : '' }}">
+              {{ $meeting->name ?? 'This meeting has no name' }}
+            </span>
             <span>
-              @foreach($meeting->days as $day)
+              <span class="{{ !isset($meeting->series) ? 'text-muted' : '' }}">{{ $meeting->series ?? 'This meeting has no series' }}</span> | {{ $meeting->user->name }}
+            </span>
+            <span class="{{ !isset($meeting->location) ? 'text-muted' : '' }}">
+              {{ $meeting->location ?? 'This meeting has no location' }}
+            </span>
+            <span class="{{ count($meeting->days) == 0 ? 'text-muted' : '' }}">
+              @forelse($meeting->days as $day)
                 {{ $day->date->format('d/m/Y') }}
                 {{ $day->start_at }}
-              @endforeach
+              @empty
+              This meeting has no dates/times set
+              @endforelse
             </span>
           </div>
           <div class="meeting__right">
@@ -102,7 +110,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
               <div class="button">Edit meeting</div>
               @break
             @case("Past Meetings")
-              <div class="button">Add a new meeting in this series</div>
+              <div class="button button--light">Add a new meeting in this series</div>
               <div class="button">Review meeting</div>
               @break
           @endswitch 
