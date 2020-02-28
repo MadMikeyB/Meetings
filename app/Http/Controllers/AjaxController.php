@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Meeting;
 use App\NextStep;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
 {
@@ -13,7 +14,7 @@ class AjaxController extends Controller
   {
     $params = $request->all() ?? [];
 
-    $meetings = Meeting::get_for_page($params);
+    $meetings = Meeting::get_for_page($params, Auth::user());
 
     return view(
       'includes.my_meetings',
@@ -28,7 +29,7 @@ class AjaxController extends Controller
   {
     $params = $request->all() ?? [];
 
-    $next_steps = NextStep::get_for_page($params);
+    $next_steps = NextStep::get_for_page($params, Auth::user());
 
     return view(
       'includes.my_next_steps',

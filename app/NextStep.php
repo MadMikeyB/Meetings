@@ -24,7 +24,7 @@ class NextStep extends UuidModel
     return $this->belongsTo(User::class);
   }
 
-  public static function get_for_page($params) {
+  public static function get_for_page($params, $user) {
     $next_steps = array(
       'Incomplete Next Steps' => NextStep::where([
         'is_complete' => false,
@@ -63,7 +63,10 @@ class NextStep extends UuidModel
     }
 
     foreach($next_steps as $tab => $set) {
-      $next_steps[$tab] = $set->get();
+      $next_steps[$tab] = $set->where([
+        'user_id' => $user->id
+      ])->get();
+
     }
 
     return $next_steps;

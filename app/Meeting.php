@@ -52,7 +52,7 @@ class Meeting extends UuidModel
     return $this->hasManyThrough(AgendaItem::class, Day::class);
   }
 
-  public static function get_for_page($params) {
+  public static function get_for_page($params, $user) {
     $meetings = array(
       'Upcoming Meetings' => Meeting::where([
         'is_complete' => false,
@@ -92,7 +92,11 @@ class Meeting extends UuidModel
     }
 
     foreach($meetings as $tab => $set) {
-      $meetings[$tab] = $set->get();
+      $meetings[$tab] = $set->where([
+        'user_id' => $user->id
+      ])->orWhere([
+        'cocreator_id' => $user->id
+      ])->get();
     }
 
     return $meetings;
