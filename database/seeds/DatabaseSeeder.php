@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
       'name' => 'Jack Ellis',
       'email' => 'jackellis1504@gmail.com',
       'password' => bcrypt(12345678),
+      'role' => 100
     ])->each(function($user) {
             factory(App\Meeting::Class, 3)
               ->create(['user_id' => $user->id])->each(function($meeting) {

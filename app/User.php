@@ -11,6 +11,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ROLE_GUEST = 0;
+    const ROLE_USER = 1;
+    const ROLE_COMPANY_ADMIN = 10;
+    const ROLE_SITE_ADMIN = 100;
+
     public $incrementing = false;
 
     protected static function boot()
@@ -29,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
