@@ -156,6 +156,15 @@ fieldset {
   flex-wrap: wrap;
 }
 
+@media all and (max-width: 640px) {
+  .tab-sort-filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: initial;
+    align-items: stretch;
+  }
+}
+
 .tab-sort-filter__tabs,
 .tab-sort-filter__sorts-filters {
   display: flex;
@@ -163,6 +172,7 @@ fieldset {
   justify-content: initial;
   align-items: initial;
   flex-wrap: initial;
+  flex: 1;
 }
 
 .tab-sort-filter__tabs > div,
@@ -172,8 +182,15 @@ fieldset {
   border-radius: 0.5rem;
 }
 
+@media all and (max-width: 640px) {
+  .tab-sort-filter__tabs,
+  .tab-sort-filter__sorts-filters {
+    max-width: unset;
+    width: 100%;
+  }
+}
+
 .tab-sort-filter__tabs {
-  margin-left: 1rem;
   margin-top: auto;
 }
 
@@ -192,15 +209,41 @@ fieldset {
   border-bottom: 1px solid #ffffff;
 }
 
+@media all and (max-width: 640px) {
+  .tab-sort-filter__tabs.tab-bar .tab {
+    flex: 1;
+  }
+}
+
 .tab-sort-filter__sorts-filters {
   margin-bottom: 0.5rem;
   position: relative;
+  max-width: 33%;
+}
+
+.tab-sort-filter__sorts-filters > span {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
+}
+
+@media all and (max-width: 640px) {
+  .tab-sort-filter__sorts-filters {
+    order: -1;
+    max-width: unset;
+  }
 }
 
 .tab-sort-filter__sort-toggle,
 .tab-sort-filter__filter-toggle {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
   cursor: pointer;
   margin-left: 0.5rem;
+  flex: 1;
 }
 
 .tab-sort-filter__sorts,
@@ -225,6 +268,13 @@ fieldset {
 .tab-sort-filter .card {
   flex: 1;
   min-width: 99%;
+  border-top-left-radius: 0;
+}
+
+@media all and (max-width: 640px) {
+  .tab-sort-filter .card {
+    border-top-right-radius: 0;
+  }
 }
 
 .tab-sort-filter .list-group__item {
