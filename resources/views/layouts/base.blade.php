@@ -30,7 +30,7 @@ $bigLinks = [
 
 $smallLinks = [
   'Account dashboard' => '/dashboard',
-  'My meetings' => '/meeting',
+  'My meetings' => '/meetings',
   'My next steps' => '/next_steps',
   'My details' => '/me'
 ]
