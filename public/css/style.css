@@ -3031,6 +3031,10 @@ fieldset {
   padding-left: 10rem;
 }
 
+.text-muted {
+  color: #999;
+}
+
 .container {
   width: 95%;
   max-width: 992px;
@@ -3199,6 +3203,7 @@ fieldset {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   padding: 1rem;
+  margin-right: 0.3rem;
 }
 
 .tab-sort-filter__tabs.tab-bar {
@@ -3211,8 +3216,14 @@ fieldset {
 }
 
 @media all and (max-width: 640px) {
-  .tab-sort-filter__tabs.tab-bar .tab {
+  .tab-sort-filter__tabs.tab-bar.tab-bar {
+    justify-content: space-between;
+  }
+
+  .tab-sort-filter__tabs.tab-bar.tab-bar .tab {
+    max-width: 24%;
     flex: 1;
+    margin-right: unset;
   }
 }
 
@@ -3225,9 +3236,10 @@ fieldset {
 .tab-sort-filter__sorts-filters > span {
   display: flex;
   flex-direction: row;
-  justify-content: initial;
+  justify-content: flex-end;
   align-items: initial;
   flex-wrap: initial;
+  flex: 1;
 }
 
 @media all and (max-width: 640px) {
@@ -3244,7 +3256,13 @@ fieldset {
   border-radius: 0.5rem;
   cursor: pointer;
   margin-left: 0.5rem;
-  flex: 1;
+}
+
+@media all and (max-width: 640px) {
+  .tab-sort-filter__sort-toggle,
+  .tab-sort-filter__filter-toggle {
+    flex: 1;
+  }
 }
 
 .tab-sort-filter__sorts,
