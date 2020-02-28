@@ -72,8 +72,23 @@ $filter_type = $params['next_step']['filter'] ?? [];
           class="tab-body {{ $loop->index == $next_step_tab?'active':'' }}">
         @forelse($tab as $next_step)
         <div class="next_step list-group__item">
-          {{ $next_step->description }}
-          {{ $next_step->is_complete }}
+          <div class="next-step__left">
+            <span>{{ $next_step->description }}</span>
+            <span>{{ $next_step->meeting->name }}</span>
+            <span>{{ $next_step->completed_by_date }}</span>
+          </div>
+          <div class="next-step__right">
+            @if($next_step->is_complete)
+              <div class="button">
+                Mark as incomplete
+              </div>
+            @else
+              <span class="pr-10">Due date: {{ date('d-m-y', strtotime($next_step->completed_by_date)) }}</span>
+              <div class="button">
+                Mark as complete
+              </div>
+            @endif
+          </div>
         </div>
         @empty
         <div class="next-step list-group__item">
