@@ -12,3 +12,29 @@
   justify-content: $justify;
   align-items: $align;
 }
+
+@mixin small {
+  @media all and (max-width: 320px) {
+    @content;
+  }
+}
+@mixin medium {
+  @media all and (max-width: 640px) {
+    @content;
+  }
+}
+@mixin large {
+  @media all and (max-width: 992px) {
+    @content;
+  }
+}
+@mixin xlarge {
+  @media all and (max-width: 1200px) {
+    @content;
+  }
+}
+@mixin xxlarge {
+  @media all and (max-width: 1600px) {
+    @content;
+  }
+}
