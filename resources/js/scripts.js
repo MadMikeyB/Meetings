@@ -1,30 +1,54 @@
-  function ajaxReload(obj, selector) {
-    let method = obj.method ? obj.method : 'GET';
-    let url = obj.url;
-    let async = obj.async ? obj.async : true;
-    let user = obj.user ? obj.user : null;
-    let password = obj.password ? obj.password : null;
-    let x = new XMLHttpRequest();
-    x.onreadystatechange = function() {
-      if(this.readyState == 4 && this.status == 200) {
-        let d = document.createElement("div");
-        d.innerHTML = x.responseText;
-        console.log(x);
-        document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
-        return true
-      } else if (this.status != 200) {
-        console.log(this.responseText);
-        return false;
-      }
+function ajaxReload(obj, selector) {
+  let method = obj.method ? obj.method : 'GET';
+  let url = obj.url;
+  let async = obj.async ? obj.async : true;
+  let user = obj.user ? obj.user : null;
+  let password = obj.password ? obj.password : null;
+  let x = new XMLHttpRequest();
+  x.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      let d = document.createElement("div");
+      d.innerHTML = x.responseText;
+      console.log(x);
+      document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
+      return true
+    } else if (this.status != 200) {
+      console.log(this.responseText);
+      return false;
     }
-    x.open(method, url, async, user, password);
-    if(method == 'POST') {
-      x.send(obj.data);
-    } else {
-      x.send();
-    }
-    return null;
   }
+  x.open(method, url, async, user, password);
+  if(method == 'POST') {
+    x.send(obj.data);
+  } else {
+    x.send();
+  }
+  return null;
+}
+
+function ajaxCall(obj) {
+  let method = obj.method ? obj.method : 'GET';
+  let url = obj.url;
+  let async = obj.async ? obj.async : true;
+  let user = obj.user ? obj.user : null;
+  let password = obj.password ? obj.password : null;
+  let x = new XMLHttpRequest();
+  x.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      return x
+    } else if (this.status != 200) {
+      console.error(this.responseText);
+      return null;
+    }
+  }
+  x.open(method, url, async, user, password);
+  if(method == 'POST') {
+    x.send(obj.data);
+  } else {
+    x.send();
+  }
+  return null;
+}
 
 
 $(document).ready(function() {
