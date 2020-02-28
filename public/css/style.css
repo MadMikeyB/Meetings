@@ -173,7 +173,6 @@ fieldset {
 }
 
 .tab-sort-filter__tabs {
-  margin-left: 1rem;
   margin-top: auto;
 }
 
@@ -258,6 +257,10 @@ fieldset {
   flex-wrap: initial;
 }
 
+.tab-sort-filter .tab-body-bar {
+  border-top-left-radius: 0;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -299,6 +302,10 @@ fieldset {
 
 .plan-nav-buttons > * {
   margin-left: 1rem;
+}
+
+.agenda__day {
+  border: 1px solid #000000;
 }
 
 
