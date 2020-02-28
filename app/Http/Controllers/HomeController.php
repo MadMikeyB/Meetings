@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Meeting;
 use App\NextStep;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,12 +26,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+      $user = Auth::user();
       $params = $request->all();
 
       $params['q_limit'] = 3;
 
-      $meetings = Meeting::get_for_page($params);
-      $next_steps = NextStep::get_for_page($params);
+      $meetings = Meeting::get_for_page($params, $user);
+      $next_steps = NextStep::get_for_page($params, $user);
 
       return view(
         'dashboard.home',
@@ -51,7 +53,7 @@ class HomeController extends Controller
     {
       $params = $request->all();
 
-      $meetings = Meeting::get_for_page($params);
+      $meetings = Meeting::get_for_page($params, Auth::user());
 
       return view(
         'dashboard.meetings',
@@ -71,7 +73,7 @@ class HomeController extends Controller
     {
       $params = $request->all();
 
-      $next_steps = NextStep::get_for_page($params);
+      $next_steps = NextStep::get_for_page($params, Auth::user());
 
       return view(
         'dashboard.next_steps',
