@@ -29,6 +29,7 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       padding: 1rem;
+      margin-right: 0.3rem;
     }
 
     &.tab-bar {
@@ -39,12 +40,17 @@
       }
 
       @include medium {
-        .tab {
-          flex: 1;
+
+        &.tab-bar {
+          justify-content: space-between;
+          .tab {
+            max-width: 24%;
+            flex: 1;
+            margin-right: unset;
+          }
         }
       }
     }
-
   }
 
   &__sorts-filters {
@@ -52,7 +58,8 @@
     position: relative;
     max-width: 33%;
     & > span {
-      @include flex-row;
+      @include flex-row(flex-end);
+      flex: 1;
     }
 
     @include medium {
@@ -68,7 +75,10 @@
     border-radius: 0.5rem;
     cursor: pointer;
     margin-left: 0.5rem;
-    flex: 1;
+
+    @include medium {
+      flex: 1;
+    }
   }
 
   &__sorts,
