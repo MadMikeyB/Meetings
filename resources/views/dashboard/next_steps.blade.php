@@ -17,7 +17,6 @@
       action=""
       method="GET">
   <div class="next-steps-ajax">@include('includes.my_next_steps')</div>
-<input type="submit">
 </form>
 
 @endsection
