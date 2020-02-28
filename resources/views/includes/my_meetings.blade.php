@@ -19,9 +19,9 @@ $filter_type = $params['meeting']['filter'] ?? [];
 
 
   <!-- Sorting and filtering -->
-  <fieldset form="mns-form" name="meetings">
+  <fieldset form="mns-form" name="meetings" class="tab-sort-filter__sorts-filters">
   <input type="hidden" name="meeting[tab]" value="{{ $meeting_tab }}">
-  <span class="tab-sort-filter__sorts-filters">
+  <span>
     <!-- Sorting -->
     <div class="tab-sort-filter__sort-toggle">Sort By</div>
     <div class="tab-sort-filter__sorts">
@@ -91,12 +91,18 @@ $filter_type = $params['meeting']['filter'] ?? [];
           <div class="meeting__right">
           @switch($tab_name)
             @case("Upcoming Meetings")
+              @php
+              $ucc = [$meeting->user_id, $meeting->cocreator_id]
+              @endphp
+              @if(in_array(Auth::user()->id, $ucc))
               <div class="button">Run meeting</div>
+              @endif
               @break
             @case("Draft Meetings")
               <div class="button">Edit meeting</div>
               @break
             @case("Past Meetings")
+              <div class="button">Add a new meeting in this series</div>
               <div class="button">Review meeting</div>
               @break
           @endswitch 

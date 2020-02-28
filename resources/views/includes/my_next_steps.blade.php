@@ -20,9 +20,9 @@ $filter_type = $params['next_step']['filter'] ?? [];
 
 
   <!-- Sorting and filtering -->
-  <fieldset form="mns-form" name="next_steps">
+  <fieldset form="mns-form" name="next_steps" class="tab-sort-filter__sorts-filters">
   <input type="hidden" name="next_step[tab]" value="{{ $next_step_tab }}">
-  <span class="tab-sort-filter__sorts-filters">
+  <span>
     <!-- Sorting -->
     <div class="tab-sort-filter__sort-toggle">Sort By</div>
     <div class="tab-sort-filter__sorts">
