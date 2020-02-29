@@ -13,5 +13,5 @@ let mix = require('laravel-mix');
 
 mix.sass('resources/sass/app.scss', 'public/css/style.css',  {sourceMap: true})
    .sourceMaps(true, 'source-map')
-   .babel('resources/js/scripts.js', 'public/js/scripts.js')
+   .babel(['resources/js/functions.js', 'resources/js/scripts.js'], 'public/js/scripts.js')
    .babel('resources/js/app.js', 'public/js/app.js');
