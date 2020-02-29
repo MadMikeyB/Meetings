@@ -24,6 +24,8 @@ class CreateMeetingsTable extends Migration
             $table->text('additional')->nullable();
             $table->boolean('is_draft')->default(true);
             $table->boolean('is_complete')->default(false);
+            $table->text('attendees')->comment("Cast to array in model");
+            $table->text('guests')->comment("Cast to array in model");
             $table->timestamps();
         });
     }
