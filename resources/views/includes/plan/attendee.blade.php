@@ -1,14 +1,13 @@
 @php
 
-if(isset($attendee)) {
-  $id = $attendee->id;
-} else {
-  $id = $uuid;
-}
+$person = $attendee ?? $meeting->user->id;
 
 @endphp
 
-<fieldset class="attendees">
-  <input type="hidden" name="attendees[id][]" value="{{ $id }}">
-  <input type="string" name="attendees[user_id][]" value="{{ $attendee->user_id ?? '' }}">
-</fieldset>
+
+<select name="attendees[]">
+  @foreach(Auth::user()->company->users as $u)
+    <option name="attendees[]" value="{{ $u->id }}" {{ $person == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+  @endforeach
+</select>
+

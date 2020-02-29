@@ -35,6 +35,7 @@ class PlanController extends Controller
   {
     $params = $request->all();
 
+    dump($params);
     if(isset($params['days'])) {
 
       /*
@@ -52,24 +53,6 @@ class PlanController extends Controller
       foreach($days as $day) {
         $day['meeting_id'] = $meeting->id;
         Day::updateOrCreate(['id' => $day['id']], $day);
-      }
-    }
-
-    if(isset($params['attendees'])) {
-      /*
-      *  ATTENDEES
-      */
-
-      $attendees = [];
-
-      foreach($params['attendees'] as $k => $a) {
-        foreach($a as $i => $v) {
-          $attendees[$i][$k] = $v;
-        }
-      }
-      foreach($attendees as $attendee) {
-        $attendee['meeting_id'] = $meeting->id;
-        Attendee::updateOrCreate(['id' => $attendee['id']], $attendee);
       }
     }
 

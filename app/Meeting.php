@@ -4,6 +4,12 @@ namespace App;
 
 class Meeting extends UuidModel
 {
+
+  protected $attributes = [
+    'attendees' => "[]",
+    'guests' => "[]",
+  ];
+
   protected $fillable = [
     'cocreator_id',
     'name',
@@ -11,14 +17,17 @@ class Meeting extends UuidModel
     'location',
     'room',
     'additional',
+    'attendees',
+    'guests',
+  ];
+
+  protected $casts = [
+    'attendees' => 'array',
+    'guests' => 'array',
   ];
 
   public function user() {
     return $this->belongsTo(User::class);
-  }
-
-  public function attendees() {
-    return $this->hasMany(Attendee::class);
   }
 
   public function objectives() {
@@ -39,12 +48,9 @@ class Meeting extends UuidModel
   public function concerns() {
     return $this->hasMany(Concern::class);
   }
-
   public function nextsteps() {
     return $this->hasMany(NextStep::class);
   }
-
-
   public function days() {
     return $this->hasMany(Day::class)->orderBy('date', 'asc');
   }

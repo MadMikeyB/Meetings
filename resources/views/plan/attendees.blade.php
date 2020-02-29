@@ -7,26 +7,37 @@
 <a href="/plan/objectives/{{ $meeting->id }}" class="button">On to objectives</a>
 @endsection
 
-
-@php
-$vars = [
-  "Name" => $meeting->name,
-  "Series" => $meeting->series,
-  "Location" => $meeting->location,
-  "Room" => $meeting->room,
-  "Additional" => $meeting->additional,
-]
-
-
-@endphp
-
 @section('form')
 
-@forelse($meeting->attendees as $attendee)
-@include('includes.plan.attendee')
-@empty
-@include('includes.plan.attendee')
-@endforelse
+<fieldset class="attendees">
+  <span class="attendees__col">
+    @forelse($meeting->attendees as $attendee)
+      @include('includes.plan.attendee')
+    @empty
+      @include('includes.plan.attendee')
+    @endforelse
+  </span>
+</fieldset>
 
 <span id="add-attendee">Add attendee</span>
+
+<fieldset class="guests">
+  <span class="guests__col">
+    @forelse($meeting->guests as $guest)
+      @include('includes.plan.guest')
+    @empty
+      @include('includes.plan.guest')
+    @endforelse
+  </span>
+</fieldset>
+
+<span id="add-guest">Add guest</span>
+
+<script type="text/template" id="new-attendee">
+@include('includes.plan.attendee')
+</script>
+
+<script type="text/template" id="new-guest">
+@include('includes.plan.guest')
+</script>
 @endsection
