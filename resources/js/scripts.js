@@ -1,94 +1,108 @@
-function ajaxReload(obj, selector) {
-  let method = obj.method ? obj.method : 'GET';
-  let url = obj.url;
-  let async = obj.async ? obj.async : true;
-  let user = obj.user ? obj.user : null;
-  let password = obj.password ? obj.password : null;
-  let x = new XMLHttpRequest();
-  x.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      let d = document.createElement("div");
-      d.innerHTML = x.responseText;
-      console.log(x);
-      document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
-      return true
-    } else if (this.status != 200) {
-      console.log(this.responseText);
-      return false;
-    }
-  }
-  x.open(method, url, async, user, password);
-  if(method == 'POST') {
-    x.send(obj.data);
-  } else {
-    x.send();
-  }
-  return null;
-}
+document.addEventListener("DOMContentLoaded", function(){
+  // Tabbing around
+  onClick(".tab-bar .tab", function() {
+    console.log("Click!");
+    let clickedTab = this;
+    let clickedTabIndex = clickedTab.getAttribute("tab-index");
+    let clickedTabBar = this.closest(".tab-bar");
+    let clickedTabBarId = clickedTabBar.id;
+    let otherTabs = clickedTabBar.querySelectorAll(".tab");
+    let controllees = document.querySelectorAll("[controlled-by=\"" + clickedTabBarId + "\"]");
 
-function ajaxCall(obj) {
-  let method = obj.method ? obj.method : 'GET';
-  let url = obj.url;
-  let async = obj.async ? obj.async : true;
-  let user = obj.user ? obj.user : null;
-  let password = obj.password ? obj.password : null;
-  let x = new XMLHttpRequest();
-  x.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      return x
-    } else if (this.status != 200) {
-      console.error(this.responseText);
-      return null;
-    }
-  }
-  x.open(method, url, async, user, password);
-  if(method == 'POST') {
-    x.send(obj.data);
-  } else {
-    x.send();
-  }
-  return null;
-}
+    otherTabs.forEach(function(tab) {
+      tab.classList.remove("active");
+    });
+    clickedTab.classList.add("active");
 
+    controllees.forEach(function(tabBodyBar) {
+      tabBodyBar.querySelectorAll(".tab-body").forEach(function(tabBody) {
+        console.log(tabBody);
+        if (tabBody.getAttribute("tab-index") == clickedTabIndex) {
+          tabBody.classList.add("active");
+        } else {
+          tabBody.classList.remove("active");
+        }
+      })
+    })
+  })
 
-$(document).ready(function() {
-  // Super simple tabbing
-  $(document).on("click", ".tab-bar .tab", function(e) {
-    let bar = $(this).parents(".tab-bar");            // Get the tab bar
-    let c = $(bar).attr("id");                        // Get its ID
-    let i = $(this).attr("tab-index");                // Get the index of the selected tab
-    let controllees = $("[controlled-by=" + c + "]"); // Get the tab bodies controlled by this bar
-
-    // Remove all instances of the class "active" and reapply only to the relevant tab body
-    $(this).siblings().removeClass("active");
-    $(this).addClass("active");
-    $(controllees).find(".tab-body").removeClass("active");
-    $(controllees).find(".tab-body[tab-index=" + i + "]").addClass("active");
+  // For meetings and next steps tab, keep a record of what tab's open
+  onClick("#meetings-tab .tab", function() {
+    document.querySelector("[name=meeting\\[tab\\]]").value = this.getAttribute("tab-index");
   });
 
-  // Sort and filter tab dropdowns
-  $(document).on("click", ".tab-sort-filter__sort-toggle", function() {
-    $(this).siblings(".tab-sort-filter__filters").removeClass("active");
-    $(this).siblings(".tab-sort-filter__sorts").toggleClass("active");
-  });
-  $(document).on("click", ".tab-sort-filter__filter-toggle", function() {
-    $(this).siblings(".tab-sort-filter__sorts").removeClass("active");
-    $(this).siblings(".tab-sort-filter__filters").toggleClass("active");
+  onClick("#next-steps-tab .tab", function() {
+    document.querySelector("[name=next-step\\[tab\\]]").value = this.getAttribute("tab-index");
   });
 
-  $(document).on("change", "#mns-form .meetings-ajax input", function() {
-    //console.log($(this));
+  onClick(".tab-sort-filter__sort-toggle", function() {
+    this.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
+    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
+  });
+
+  onClick(".tab-sort-filter__filter-toggle", function() {
+    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
+    this.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
+  });
+
+  onChange("#mns-form .meetings-ajax", function() {
+    console.log("/ajax/my_meetings?" + toQueryString("#mns-form"));
     ajaxReload({
-      url: "/ajax/my_meetings?" + $("#mns-form").serialize(),
+      url: "/ajax/my_meetings?" + toQueryString("#mns-form"),
     }, ".mns-meeting-list")
   });
 
-  $(document).on("change", "#mns-form .next-steps-ajax input", function() {
-    //console.log($(this));
+  onChange("#mns-form .next-steps-ajax", function() {
+    console.log("/ajax/my_next_steps?" + toQueryString("#mns-form"));
     ajaxReload({
-      url: "/ajax/my_next_steps?" + $("#mns-form").serialize(),
+      url: "/ajax/my_next_steps?" + toQueryString("#mns-form"),
     }, ".mns-next-step-list")
   });
+
+  onChange(
+    "#plan-form input, #plan-form select, #plan-form textarea",
+    function() {
+      let m_id = document.querySelector("[name=id]").value;
+      console.log(m_id);
+      let d = toQueryString("#plan-form");
+      console.log(d);
+      console.log($("#plan-form").serialize());
+      ajaxCall({
+        method: "PUT",
+        headers: {'Content-type': 'application/x-www-form-urlencoded'},
+        url: "/plan/save/" + m_id,
+        data: d,
+      })
+    });
+
+  onClick("#plan-form #save-button", function() {
+      let m_id = document.querySelector("[name=id]").value;
+      console.log(m_id);
+      let d = toQueryString("#plan-form");
+      console.log(d);
+      ajaxCall({
+        method: "PUT",
+        headers: {'Content-type': 'application/x-www-form-urlencoded'},
+        url: "/plan/save/" + m_id,
+        data: d,
+      })
+  });
+
+  onClick("#plan-form #add-attendee", function() {
+    document.querySelector(".attendees__col").innerHTML += document.getElementById("new-attendee").innerHTML;
+  });
+
+  onClick("#plan-form #add-guest", function() {
+    document.querySelector(".guests__col").innerHTML += document.getElementById("new-guest").innerHTML;
+  });
+
+  // Handler when the DOM is fully loaded
+  console.log("Loaded");
+});
+
+/*
+
+$(document).ready(function() {
 
   $(document).on("change", "#run-form .meetings-ajax input", function() {
     //console.log($(this));
@@ -108,13 +122,6 @@ $(document).ready(function() {
   });
 
 
-  $(document).on("click", "#meetings-tab .tab", function() {
-    $("[name=meeting\\[tab\\]]").val($(this).attr("tab-index"));
-  });
-
-  $(document).on("click", "#next_steps-tab .tab", function() {
-    $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
-  });
 
   $("#plan-form").on("change", "input, select, textarea", function(e) {
     e.preventDefault();
@@ -176,3 +183,4 @@ $(document).ready(function() {
   });
 
 });
+*/
