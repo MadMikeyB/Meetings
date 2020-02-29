@@ -19,3 +19,10 @@
     margin-left: 1rem;
   }
 }
+
+.attendees,
+.guests {
+  &__col {
+    @include flex-col;
+  }
+}
