@@ -34,12 +34,14 @@ $filter_type = $params['next_step']['filter'] ?? [];
         @endphp
 
       @foreach($sorts as $sort_val => $label)
-        <label for="sort-{{$sort_val}}">{{$label}}</label>
+        <span class="tab-sort-filter__sort-span">
         <input type="radio"
                name="next_step[sort]"
                id="sort-{{$sort_val}}"
                value="{{$sort_val}}"
                {{ $sort_type == $sort_val ? 'checked' : ''}}>
+        <label for="sort-{{$sort_val}}">{{$label}}</label>
+        </span>
       @endforeach
     </div>
 

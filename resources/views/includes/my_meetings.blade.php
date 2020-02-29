@@ -27,22 +27,24 @@ $filter_type = $params['meeting']['filter'] ?? [];
     <div class="tab-sort-filter__sorts">
         @php
         $sorts = [
-          "name_asc" => "Name (asc)",
-          "name_desc" => "Name (desc)",
+          "name_asc" => "Name (A-Z)",
+          "name_desc" => "Name (Z-A)",
           "location_asc" => "Location (asc)",
           "location_desc" => "Location (desc)",
-          "series_asc" => "Series (asc)",
-          "series_desc" => "Series (desc)",
+          "series_asc" => "Series Name (A-Z)",
+          "series_desc" => "Series Name (Z-A)",
         ]
         @endphp
 
       @foreach($sorts as $sort_val => $label)
-        <label for="sort-{{$sort_val}}">{{$label}}</label>
+        <span class="tab-sort-filter__sort-span">
         <input type="radio"
                name="meeting[sort]"
                id="sort-{{$sort_val}}"
                value="{{$sort_val}}"
                {{ $sort_type == $sort_val ? 'checked' : ''}}>
+        <label for="sort-{{$sort_val}}">{{$label}}</label>
+        </span>
       @endforeach
     </div>
 
