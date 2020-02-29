@@ -11,9 +11,8 @@
     flex: 1;
 
     & > div {
+      @include card;
       padding: 0.5rem 1rem;
-      border: 1px solid $black;
-      border-radius: 0.5rem;
     }
 
     @include medium {
@@ -70,9 +69,8 @@
 
   &__sort-toggle,
   &__filter-toggle {
+    @include card;
     padding: 0.5rem 1rem;
-    border: 1px solid $black;
-    border-radius: 0.5rem;
     cursor: pointer;
     margin-left: 0.5rem;
 
@@ -84,6 +82,8 @@
   &__sorts,
   &__filters {
     @include flex-col;
+    @include card;
+    padding: 1rem;
     position: absolute;
     top: 2.5rem;
     right: 0;
@@ -94,6 +94,21 @@
       display: flex;
       z-index: 100;
     }
+  }
+
+  &__sorts {
+    input[type="radio"] {
+      display: none;
+
+      &:checked + label::before {
+        content: "> ";
+      }
+    }
+  }
+
+  &__sort-span {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .card {
