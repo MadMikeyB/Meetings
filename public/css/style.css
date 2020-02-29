@@ -3181,9 +3181,9 @@ fieldset {
 
 .tab-sort-filter__tabs > div,
 .tab-sort-filter__sorts-filters > div {
-  padding: 0.5rem 1rem;
   border: 1px solid #000000;
   border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 @media all and (max-width: 640px) {
@@ -3251,9 +3251,9 @@ fieldset {
 
 .tab-sort-filter__sort-toggle,
 .tab-sort-filter__filter-toggle {
-  padding: 0.5rem 1rem;
   border: 1px solid #000000;
   border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   margin-left: 0.5rem;
 }
@@ -3271,6 +3271,9 @@ fieldset {
   flex-direction: column;
   justify-content: initial;
   align-items: initial;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+  padding: 1rem;
   position: absolute;
   top: 2.5rem;
   right: 0;
@@ -3282,6 +3285,19 @@ fieldset {
 .tab-sort-filter__filters.active {
   display: flex;
   z-index: 100;
+}
+
+.tab-sort-filter__sorts input[type=radio] {
+  display: none;
+}
+
+.tab-sort-filter__sorts input[type=radio]:checked + label::before {
+  content: "> ";
+}
+
+.tab-sort-filter__sort-span {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .tab-sort-filter .card {
@@ -3384,6 +3400,14 @@ fieldset {
 
 .plan-nav-buttons > * {
   margin-left: 1rem;
+}
+
+.attendees__col,
+.guests__col {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
 }
 
 .agenda__day {

@@ -9,8 +9,8 @@ function ajaxReload(obj, selector) {
   x.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var d = document.createElement("div");
-      d.innerHTML = x.responseText;
-      console.log(x);
+      d.innerHTML = x.responseText; //console.log(x);
+
       document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
       return true;
     } else if (this.status != 200) {
@@ -36,136 +36,240 @@ function ajaxCall(obj) {
   var async = obj.async ? obj.async : true;
   var user = obj.user ? obj.user : null;
   var password = obj.password ? obj.password : null;
+  var headers = obj.headers ? obj.headers : {};
   var x = new XMLHttpRequest();
 
   x.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      return x;
-    } else if (this.status != 200) {
-      console.error(this.responseText);
-      return null;
+    if (this.readyState == 4) {
+      if (this.status == 200) {
+        return x;
+      } else {
+        console.error(this);
+      }
     }
   };
 
+  console.log(headers);
   x.open(method, url, async, user, password);
 
-  if (method == 'POST') {
-    x.send(obj.data);
-  } else {
-    x.send();
+  for (var type in headers) {
+    x.setRequestHeader(type, headers[type]);
   }
 
+  x.send(obj.data);
   return null;
 }
 
-$(document).ready(function () {
-  // Super simple tabbing
-  $(document).on("click", ".tab-bar .tab", function (e) {
-    var bar = $(this).parents(".tab-bar"); // Get the tab bar
-
-    var c = $(bar).attr("id"); // Get its ID
-
-    var i = $(this).attr("tab-index"); // Get the index of the selected tab
-
-    var controllees = $("[controlled-by=" + c + "]"); // Get the tab bodies controlled by this bar
-    // Remove all instances of the class "active" and reapply only to the relevant tab body
-
-    $(this).siblings().removeClass("active");
-    $(this).addClass("active");
-    $(controllees).find(".tab-body").removeClass("active");
-    $(controllees).find(".tab-body[tab-index=" + i + "]").addClass("active");
-  }); // Sort and filter tab dropdowns
-
-  $(document).on("click", ".tab-sort-filter__sort-toggle", function () {
-    $(this).siblings(".tab-sort-filter__filters").removeClass("active");
-    $(this).siblings(".tab-sort-filter__sorts").toggleClass("active");
+function onClick(sel, fn) {
+  document.addEventListener("click", function (e) {
+    if (e.target.matches(sel)) {
+      fn();
+    }
   });
-  $(document).on("click", ".tab-sort-filter__filter-toggle", function () {
-    $(this).siblings(".tab-sort-filter__sorts").removeClass("active");
-    $(this).siblings(".tab-sort-filter__filters").toggleClass("active");
+}
+
+function onChange(sel, fn) {
+  document.addEventListener("change", function (e) {
+    if (e.target.matches(sel)) {
+      fn();
+    }
   });
-  $(document).on("change", "#mns-form .meetings-ajax input", function () {
-    //console.log($(this));
+  /*
+  document.querySelectorAll(sel).forEach(function(el) {
+    el.addEventListener("change", fn)
+  })
+  */
+}
+
+function toQueryString(sel) {
+  var qs = [];
+  qs[0] = sel + " input:not([disabled]):not([type=radio])";
+  qs[1] = sel + " input[type=radio]:not([disabled]):checked";
+  qs[2] = sel + " textarea:not([disabled])";
+  qs = qs.join();
+  var queryString = "";
+  var qr = document.querySelectorAll(qs);
+  console.log(qr);
+  qr.forEach(function (i) {
+    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value));
+
+    if (i.value) {
+      queryString += "&" + i.name + "=" + i.value;
+    }
+  });
+  var selects = document.querySelectorAll(sel + " select:not([disabled])");
+  selects.forEach(function (i) {
+    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value));
+    queryString += "&" + i.name + "=" + i.querySelector("option:not([disabled]):checked").value;
+  });
+  return encodeURI(queryString);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Tabbing around
+  onClick(".tab-bar .tab", function () {
+    console.log("Click!");
+    var clickedTab = this;
+    var clickedTabIndex = clickedTab.getAttribute("tab-index");
+    var clickedTabBar = this.closest(".tab-bar");
+    var clickedTabBarId = clickedTabBar.id;
+    var otherTabs = clickedTabBar.querySelectorAll(".tab");
+    var controllees = document.querySelectorAll("[controlled-by=\"" + clickedTabBarId + "\"]");
+    otherTabs.forEach(function (tab) {
+      tab.classList.remove("active");
+    });
+    clickedTab.classList.add("active");
+    controllees.forEach(function (tabBodyBar) {
+      tabBodyBar.querySelectorAll(".tab-body").forEach(function (tabBody) {
+        console.log(tabBody);
+
+        if (tabBody.getAttribute("tab-index") == clickedTabIndex) {
+          tabBody.classList.add("active");
+        } else {
+          tabBody.classList.remove("active");
+        }
+      });
+    });
+  }); // For meetings and next steps tab, keep a record of what tab's open
+
+  onClick("#meetings-tab .tab", function () {
+    document.querySelector("[name=meeting\\[tab\\]]").value = this.getAttribute("tab-index");
+  });
+  onClick("#next-steps-tab .tab", function () {
+    document.querySelector("[name=next-step\\[tab\\]]").value = this.getAttribute("tab-index");
+  });
+  onClick(".tab-sort-filter__sort-toggle", function () {
+    this.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
+    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
+  });
+  onClick(".tab-sort-filter__filter-toggle", function () {
+    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
+    this.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
+  });
+  onChange("#mns-form .meetings-ajax", function () {
+    console.log("/ajax/my_meetings?" + toQueryString("#mns-form"));
     ajaxReload({
-      url: "/ajax/my_meetings?" + $("#mns-form").serialize()
+      url: "/ajax/my_meetings?" + toQueryString("#mns-form")
     }, ".mns-meeting-list");
   });
-  $(document).on("change", "#mns-form .next-steps-ajax input", function () {
-    //console.log($(this));
+  onChange("#mns-form .next-steps-ajax", function () {
+    console.log("/ajax/my_next_steps?" + toQueryString("#mns-form"));
     ajaxReload({
-      url: "/ajax/my_next_steps?" + $("#mns-form").serialize()
+      url: "/ajax/my_next_steps?" + toQueryString("#mns-form")
     }, ".mns-next-step-list");
   });
-  $(document).on("change", "#run-form .meetings-ajax input", function () {
+  onChange("#plan-form input, #plan-form select, #plan-form textarea", function () {
+    var m_id = document.querySelector("[name=id]").value;
+    console.log(m_id);
+    var d = toQueryString("#plan-form");
+    console.log(d);
+    console.log($("#plan-form").serialize());
+    ajaxCall({
+      method: "PUT",
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      url: "/plan/save/" + m_id,
+      data: d
+    });
+  });
+  onClick("#plan-form #save-button", function () {
+    var m_id = document.querySelector("[name=id]").value;
+    console.log(m_id);
+    var d = toQueryString("#plan-form");
+    console.log(d);
+    ajaxCall({
+      method: "PUT",
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
+      url: "/plan/save/" + m_id,
+      data: d
+    });
+  });
+  onClick("#plan-form #add-attendee", function () {
+    document.querySelector(".attendees__col").innerHTML += document.getElementById("new-attendee").innerHTML;
+  });
+  onClick("#plan-form #add-guest", function () {
+    document.querySelector(".guests__col").innerHTML += document.getElementById("new-guest").innerHTML;
+  }); // Handler when the DOM is fully loaded
+
+  console.log("Loaded");
+});
+/*
+
+$(document).ready(function() {
+
+  $(document).on("change", "#run-form .meetings-ajax input", function() {
     //console.log($(this));
     $.ajax({
       method: 'GET',
       url: '/ajax/my_meetings_run',
       data: $("#run-form").serialize(),
-      success: function success(d, ts, xhr) {
+      success: function(d, ts, xhr) {
         $(".meetings-ajax .tab-body-bar").html($(d).find(".tab-body-bar").html());
       },
-      error: function error(x, t, e) {
+      error: function(x, t, e){
         $(".ajax").html(x);
         $(".ajax").append(t);
         $(".ajax").append(e);
       }
     });
   });
-  $(document).on("click", "#meetings-tab .tab", function () {
-    $("[name=meeting\\[tab\\]]").val($(this).attr("tab-index"));
-  });
-  $(document).on("click", "#next_steps-tab .tab", function () {
-    $("[name=next_step\\[tab\\]]").val($(this).attr("tab-index"));
-  });
-  $("#plan-form").on("change", "input, select, textarea", function (e) {
+
+
+
+  $("#plan-form").on("change", "input, select, textarea", function(e) {
     e.preventDefault();
-    var m_id = $("[name=id]").val();
+    let m_id = $("[name=id]").val();
     console.log(m_id);
     $.ajax({
       url: "/plan/save/" + m_id,
       data: $("#plan-form").serialize(),
       method: "PUT",
-      success: function success(d, x, t) {
+      success: function(d, x, t){
         console.log("Success");
         $(".flex-fill").html(d);
       }
     });
   });
-  $(document).on("click", "#plan-form #add-day", function () {
+
+  $(document).on("click", "#plan-form #add-day", function() {
     $.ajax({
       method: "GET",
       url: "/ajax/plan_add_day",
-      success: function success(d, t, x) {
+      success: function(d, t, x) {
         $(".days").last().after(d);
       }
     });
   });
-  $(document).on("click", "#plan-form #add-attendee", function () {
+
+  $(document).on("click", "#plan-form #add-attendee", function() {
     $.ajax({
       method: "GET",
       url: "/ajax/plan_add_attendee",
-      success: function success(d, t, x) {
+      success: function(d, t, x) {
         $(".attendees").last().after(d);
       }
     });
   });
-  $(document).on("click", "#plan-form #add-objective", function () {
+
+  $(document).on("click", "#plan-form #add-objective", function() {
     $.ajax({
       method: "GET",
       url: "/ajax/plan_add_objective",
-      success: function success(d, t, x) {
+      success: function(d, t, x) {
         $(".objectives").last().after(d);
       }
     });
   });
-  $(document).on("click", "#plan-form #add-agenda-item", function () {
-    var m_id = $(this).attr("m-id");
+  $(document).on("click", "#plan-form #add-agenda-item", function() {
+    let m_id = $(this).attr("m-id");
     $.ajax({
       method: "GET",
       url: "/ajax/plan_add_agenda_item/" + m_id,
-      success: function success(d, t, x) {
-        if ($(".agenda__items").length) {
+      success: function(d, t, x) {
+        if($(".agenda__items").length) {
           $(".agenda_items").last().after(d);
         } else {
           $(".agenda__day").first().append(d);
@@ -173,4 +277,6 @@ $(document).ready(function () {
       }
     });
   });
+
 });
+*/
