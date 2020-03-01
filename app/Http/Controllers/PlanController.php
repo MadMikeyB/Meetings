@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Meeting;
 use App\Day;
+use App\AgendaItem;
 use App\Attendee;
 use App\Objective;
+use App\Http\Requests\PlanMeetingRequest;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,11 +33,9 @@ class PlanController extends Controller
    *
    */
 
-  public function save(Meeting $meeting, Request $request)
+  public function save(Meeting $meeting, PlanMeetingRequest $request)
   {
     $params = $request->all();
-
-    dump($params);
     if(isset($params['days'])) {
 
       /*
@@ -99,8 +99,14 @@ class PlanController extends Controller
     }
 
     $meeting->update($request->all());
+    return response()->json([], 200);
   }
 
+  public function delete(Meeting $meeting)
+  {
+    $meeting->delete();
+    return $this->redirect()->route('home.dashboard');
+  }
 
   /*
    *
@@ -156,6 +162,59 @@ class PlanController extends Controller
   public function agenda(Meeting $meeting)
   {
     $uuid = Uuid::uuid4()->toString();
+
+    $agenda_items = [
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_OPEN,
+        'name' => "Open: Review Objectives and Expectations",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_NORMAL_ITEM,
+        'name' => "Agenda Item 1",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_NORMAL_ITEM,
+        'name' => "Agenda Item 2",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_NORMAL_ITEM,
+        'name' => "Agenda Item 3",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_CLOSE_1,
+        'name' => "Close - Part 1: Review Objectives and Expectations",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_CLOSE_2,
+        'name' => "Close - Part 2: Capture Benefits and Concerns",
+      ],
+      [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => AgendaItem::TYPE_CLOSE_3,
+        'name' => "Close - Part 3: Review Next Steps",
+      ]
+    ];
+
+    foreach($meeting->days as $day) {
+      if(count($day->agenda_items) == 0) {
+        $p = 0;
+        foreach($agenda_items as $item) {
+          $item['leader'] = $meeting->user->name;
+          $item['expected_number_of_minutes'] = 5;
+          $item['day_id'] = $day->id;
+          $item['position'] = $p++;
+
+          $new_item = AgendaItem::create($item);
+        }
+      }
+    }
+
     return view(
       'plan.agenda',
       compact(["meeting", "uuid"])
