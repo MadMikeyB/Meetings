@@ -13,7 +13,7 @@ function ajaxReload(obj, selector) {
       document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
       return true
     } else if (this.status != 200) {
-      console.log(this.responseText);
+      //console.log(this.responseText);
       return false;
     }
   }
@@ -26,24 +26,34 @@ function ajaxReload(obj, selector) {
   return null;
 }
 
-function ajaxCall(obj) {
+function returnNull() {
+  return null;
+}
+
+function ajaxRequest(obj) {
   let method = obj.method ? obj.method : 'GET';
   let url = obj.url;
   let async = obj.async ? obj.async : true;
   let user = obj.user ? obj.user : null;
   let password = obj.password ? obj.password : null;
   let headers = obj.headers ? obj.headers : {};
+  let before = obj.before ? obj.before : returnNull;
+  let success = obj.success ? obj.success : returnNull;
+  let failure = obj.failure ? obj.failure : returnNull;
+  let complete = obj.complete ? obj.complete : returnNull;
   let x = new XMLHttpRequest();
   x.onreadystatechange = function() {
     if(this.readyState == 4) {
+      before(this);
+      console.log(this.status);
       if(this.status == 200) {
-        return x
+        success(this);
       } else {
-        console.error(this);
+        failure(this);
       }
+      complete(this);
     }
   }
-  console.log(headers);
   x.open(method, url, async, user, password);
   for (let type in headers) {
     x.setRequestHeader(type, headers[type]);
@@ -55,7 +65,7 @@ function ajaxCall(obj) {
 function onClick(sel, fn) {
   document.addEventListener("click", function(e) {
     if(e.target.matches(sel)) {
-      fn();
+      fn(e);
     }
   })
 }
@@ -66,11 +76,6 @@ function onChange(sel, fn) {
       fn();
     }
   })
-  /*
-  document.querySelectorAll(sel).forEach(function(el) {
-    el.addEventListener("change", fn)
-  })
-  */
 }
 
 function toQueryString(sel) {
@@ -82,20 +87,46 @@ function toQueryString(sel) {
   qs = qs.join();
   let queryString = "";
   let qr = document.querySelectorAll(qs);
-  console.log(qr);
   qr.forEach(function(i) {
-    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value))
-    if(i.value) {
-      queryString += "&" + i.name + "=" + i.value;
-    }
+    queryString += "&" + i.name + "=" + i.value;
   })
 
   let selects = document.querySelectorAll(sel + " select:not([disabled])");
   selects.forEach(function(i) {
-    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value))
     queryString += "&" + i.name + "=" + i.querySelector("option:not([disabled]):checked").value;
   })
 
+  //console.log(queryString);
   return encodeURI(queryString);
 }
 
+function planSave() {
+  let m_id = document.querySelector("[name=id]").value;
+  let d = toQueryString("#plan-form");
+  ajaxRequest({
+    method: "PUT",
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json'
+    },
+    url: "/plan/save/" + m_id,
+    data: d,
+    before: function() {
+      document.querySelector(".plan__success").innerHTML = "";
+      document.querySelector(".plan__errors").innerHTML = "";
+    },
+    success: function() {
+      document.querySelector(".plan__success").textContent = "Meeting saved successfully";
+    },
+    failure: function(x) {
+      let errors = JSON.parse(x.responseText).errors
+      let ul = document.createElement("ul");
+      for(let name in errors) {
+        let li = document.createElement("li");
+        li.textContent = name + ": " + errors[name];
+        ul.append(li);
+      }
+      document.querySelector(".plan__errors").append(ul);
+    },
+  })
+}
