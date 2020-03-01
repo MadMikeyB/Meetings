@@ -3387,6 +3387,7 @@ fieldset {
 #plan-form .label--large {
   font-size: 2rem;
   font-weight: 600;
+  margin-top: 1rem;
 }
 
 .plan-nav-buttons {
@@ -3408,6 +3409,25 @@ fieldset {
   flex-direction: column;
   justify-content: initial;
   align-items: initial;
+}
+
+.plan__details,
+.plan__days,
+.plan__attendees,
+.plan__guests {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
+}
+
+.plan__errors {
+  color: #e3342f;
+  margin-top: 1rem;
+}
+
+.plan__add-something {
+  max-width: 20rem;
 }
 
 .agenda__day {

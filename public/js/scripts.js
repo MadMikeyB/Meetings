@@ -14,7 +14,7 @@ function ajaxReload(obj, selector) {
       document.querySelector(selector).innerHTML = d.querySelector(selector).innerHTML;
       return true;
     } else if (this.status != 200) {
-      console.log(this.responseText);
+      //console.log(this.responseText);
       return false;
     }
   };
@@ -30,26 +30,38 @@ function ajaxReload(obj, selector) {
   return null;
 }
 
-function ajaxCall(obj) {
+function returnNull() {
+  return null;
+}
+
+function ajaxRequest(obj) {
   var method = obj.method ? obj.method : 'GET';
   var url = obj.url;
   var async = obj.async ? obj.async : true;
   var user = obj.user ? obj.user : null;
   var password = obj.password ? obj.password : null;
   var headers = obj.headers ? obj.headers : {};
+  var before = obj.before ? obj.before : returnNull;
+  var success = obj.success ? obj.success : returnNull;
+  var failure = obj.failure ? obj.failure : returnNull;
+  var complete = obj.complete ? obj.complete : returnNull;
   var x = new XMLHttpRequest();
 
   x.onreadystatechange = function () {
     if (this.readyState == 4) {
+      before(this);
+      console.log(this.status);
+
       if (this.status == 200) {
-        return x;
+        success(this);
       } else {
-        console.error(this);
+        failure(this);
       }
+
+      complete(this);
     }
   };
 
-  console.log(headers);
   x.open(method, url, async, user, password);
 
   for (var type in headers) {
@@ -63,7 +75,7 @@ function ajaxCall(obj) {
 function onClick(sel, fn) {
   document.addEventListener("click", function (e) {
     if (e.target.matches(sel)) {
-      fn();
+      fn(e);
     }
   });
 }
@@ -74,11 +86,6 @@ function onChange(sel, fn) {
       fn();
     }
   });
-  /*
-  document.querySelectorAll(sel).forEach(function(el) {
-    el.addEventListener("change", fn)
-  })
-  */
 }
 
 function toQueryString(sel) {
@@ -89,29 +96,56 @@ function toQueryString(sel) {
   qs = qs.join();
   var queryString = "";
   var qr = document.querySelectorAll(qs);
-  console.log(qr);
   qr.forEach(function (i) {
-    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value));
-
-    if (i.value) {
-      queryString += "&" + i.name + "=" + i.value;
-    }
+    queryString += "&" + i.name + "=" + i.value;
   });
   var selects = document.querySelectorAll(sel + " select:not([disabled])");
   selects.forEach(function (i) {
-    console.log(i.name, encodeURI(i.name), i.value, encodeURI(i.value));
     queryString += "&" + i.name + "=" + i.querySelector("option:not([disabled]):checked").value;
-  });
+  }); //console.log(queryString);
+
   return encodeURI(queryString);
+}
+
+function planSave() {
+  var m_id = document.querySelector("[name=id]").value;
+  var d = toQueryString("#plan-form");
+  ajaxRequest({
+    method: "PUT",
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json'
+    },
+    url: "/plan/save/" + m_id,
+    data: d,
+    before: function before() {
+      document.querySelector(".plan__success").innerHTML = "";
+      document.querySelector(".plan__errors").innerHTML = "";
+    },
+    success: function success() {
+      document.querySelector(".plan__success").textContent = "Meeting saved successfully";
+    },
+    failure: function failure(x) {
+      var errors = JSON.parse(x.responseText).errors;
+      var ul = document.createElement("ul");
+
+      for (var name in errors) {
+        var li = document.createElement("li");
+        li.textContent = name + ": " + errors[name];
+        ul.append(li);
+      }
+
+      document.querySelector(".plan__errors").append(ul);
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   // Tabbing around
-  onClick(".tab-bar .tab", function () {
-    console.log("Click!");
-    var clickedTab = this;
+  onClick(".tab-bar .tab", function (e) {
+    var clickedTab = e.target;
     var clickedTabIndex = clickedTab.getAttribute("tab-index");
-    var clickedTabBar = this.closest(".tab-bar");
+    var clickedTabBar = e.target.closest(".tab-bar");
     var clickedTabBarId = clickedTabBar.id;
     var otherTabs = clickedTabBar.querySelectorAll(".tab");
     var controllees = document.querySelectorAll("[controlled-by=\"" + clickedTabBarId + "\"]");
@@ -132,19 +166,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }); // For meetings and next steps tab, keep a record of what tab's open
 
-  onClick("#meetings-tab .tab", function () {
-    document.querySelector("[name=meeting\\[tab\\]]").value = this.getAttribute("tab-index");
+  onClick("#meetings-tab .tab", function (e) {
+    document.querySelector("[name=meeting\\[tab\\]]").value = e.target.getAttribute("tab-index");
   });
   onClick("#next-steps-tab .tab", function () {
-    document.querySelector("[name=next-step\\[tab\\]]").value = this.getAttribute("tab-index");
+    document.querySelector("[name=next-step\\[tab\\]]").value = e.target.getAttribute("tab-index");
   });
   onClick(".tab-sort-filter__sort-toggle", function () {
-    this.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
-    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
   });
   onClick(".tab-sort-filter__filter-toggle", function () {
-    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
-    this.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
   });
   onChange("#mns-form .meetings-ajax", function () {
     console.log("/ajax/my_meetings?" + toQueryString("#mns-form"));
@@ -159,39 +193,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }, ".mns-next-step-list");
   });
   onChange("#plan-form input, #plan-form select, #plan-form textarea", function () {
-    var m_id = document.querySelector("[name=id]").value;
-    console.log(m_id);
-    var d = toQueryString("#plan-form");
-    console.log(d);
-    console.log($("#plan-form").serialize());
-    ajaxCall({
-      method: "PUT",
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      },
-      url: "/plan/save/" + m_id,
-      data: d
-    });
-  });
-  onClick("#plan-form #save-button", function () {
-    var m_id = document.querySelector("[name=id]").value;
-    console.log(m_id);
-    var d = toQueryString("#plan-form");
-    console.log(d);
-    ajaxCall({
-      method: "PUT",
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      },
-      url: "/plan/save/" + m_id,
-      data: d
-    });
+    planSave();
   });
   onClick("#plan-form #add-attendee", function () {
-    document.querySelector(".attendees__col").innerHTML += document.getElementById("new-attendee").innerHTML;
+    document.querySelector(".plan__attendees").innerHTML += document.getElementById("new-attendee").innerHTML;
   });
   onClick("#plan-form #add-guest", function () {
-    document.querySelector(".guests__col").innerHTML += document.getElementById("new-guest").innerHTML;
+    document.querySelector(".plan__guests").innerHTML += document.getElementById("new-guest").innerHTML;
+  });
+  onClick("#plan-form #add-objective", function () {
+    ajaxRequest({
+      url: "/ajax/plan_add_objective",
+      success: function success(d) {
+        console.log(d);
+        document.querySelector(".plan__objectives").innerHTML += d.response;
+      }
+    });
+  });
+  onClick("#plan-form #add-day", function () {
+    ajaxRequest({
+      url: "/ajax/plan_add_day",
+      success: function success(d) {
+        console.log(d);
+        document.querySelector(".plan__days").innerHTML += d.response;
+      }
+    });
   }); // Handler when the DOM is fully loaded
 
   console.log("Loaded");
@@ -217,66 +243,6 @@ $(document).ready(function() {
     });
   });
 
-
-
-  $("#plan-form").on("change", "input, select, textarea", function(e) {
-    e.preventDefault();
-    let m_id = $("[name=id]").val();
-    console.log(m_id);
-    $.ajax({
-      url: "/plan/save/" + m_id,
-      data: $("#plan-form").serialize(),
-      method: "PUT",
-      success: function(d, x, t){
-        console.log("Success");
-        $(".flex-fill").html(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-day", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_day",
-      success: function(d, t, x) {
-        $(".days").last().after(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-attendee", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_attendee",
-      success: function(d, t, x) {
-        $(".attendees").last().after(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-objective", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_objective",
-      success: function(d, t, x) {
-        $(".objectives").last().after(d);
-      }
-    });
-  });
-  $(document).on("click", "#plan-form #add-agenda-item", function() {
-    let m_id = $(this).attr("m-id");
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_agenda_item/" + m_id,
-      success: function(d, t, x) {
-        if($(".agenda__items").length) {
-          $(".agenda_items").last().after(d);
-        } else {
-          $(".agenda__day").first().append(d);
-        }
-      }
-    });
-  });
 
 });
 */
