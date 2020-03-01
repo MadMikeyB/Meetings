@@ -8,6 +8,7 @@
     @include('includes.plan.agenda_item')
     <div class="agenda__day__items">
       {{ $item->name }}
+      {{ $item->type }}
       {{ $item->expected_number_of_minutes }}
     </div>
   @endforeach
