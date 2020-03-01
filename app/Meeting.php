@@ -29,7 +29,6 @@ class Meeting extends UuidModel
   public function user() {
     return $this->belongsTo(User::class);
   }
-
   public function objectives() {
     return $this->hasMany(Objective::class);
   }
@@ -106,5 +105,20 @@ class Meeting extends UuidModel
     }
 
     return $meetings;
+  }
+
+  protected static function boot() {
+    parent::boot();
+
+    static::deleting(function(Meeting $meeting) {
+      $meeting->objectives()->delete();
+      $meeting->expectations()->delete();
+      $meeting->decisions()->delete();
+      $meeting->notes()->delete();
+      $meeting->benefits()->delete();
+      $meeting->concerns()->delete();
+      $meeting->nextsteps()->delete();
+      $meeting->days()->delete();
+    });
   }
 }
