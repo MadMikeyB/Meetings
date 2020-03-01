@@ -39,6 +39,7 @@ Route::prefix('plan')->name('plan.')->group(function() {
     Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
   }
     Route::put('save/{meeting}', 'PlanController@save')->name('save');
+    Route::get('delete/{meeting}', 'PlanController@delete')->name('delete');
 });
 
 Route::prefix('run')->name('run.')->group(function() {
