@@ -109,7 +109,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
               @endif
               @break
             @case("Draft Meetings")
-              <div class="button">Edit meeting</div>
+              <a href="/plan/details/{{ $meeting->id }}" class="button">Edit meeting</a>
               @break
             @case("Past Meetings")
               <div class="button button--light">Add a new meeting in this series</div>
