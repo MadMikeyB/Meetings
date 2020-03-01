@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
                 ])->each(function($day) {
                   $items = factory(App\AgendaItem::class, 5)->create([
                     'day_id' => $day->id,
-                    'leader_id' => App\User::all()->random()->id,
+                    'leader' => App\User::all()->random()->name,
                     'position' => 0,
                   ]);
                 });
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
                 ])->each(function($day) {
                   $items = factory(App\AgendaItem::class, 5)->create([
                     'day_id' => $day->id,
-                    'leader_id' => App\User::all()->random()->id,
+                    'leader' => App\User::all()->random()->name,
                     'position' => 0,
                   ]);
                 });
