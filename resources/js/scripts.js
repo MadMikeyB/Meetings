@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(){
   // Tabbing around
-  onClick(".tab-bar .tab", function() {
-    console.log("Click!");
-    let clickedTab = this;
+  onClick(".tab-bar .tab", function(e) {
+    let clickedTab = e.target;
     let clickedTabIndex = clickedTab.getAttribute("tab-index");
-    let clickedTabBar = this.closest(".tab-bar");
+    let clickedTabBar = e.target.closest(".tab-bar");
     let clickedTabBarId = clickedTabBar.id;
     let otherTabs = clickedTabBar.querySelectorAll(".tab");
     let controllees = document.querySelectorAll("[controlled-by=\"" + clickedTabBarId + "\"]");
@@ -27,22 +26,22 @@ document.addEventListener("DOMContentLoaded", function(){
   })
 
   // For meetings and next steps tab, keep a record of what tab's open
-  onClick("#meetings-tab .tab", function() {
-    document.querySelector("[name=meeting\\[tab\\]]").value = this.getAttribute("tab-index");
+  onClick("#meetings-tab .tab", function(e) {
+    document.querySelector("[name=meeting\\[tab\\]]").value = e.target.getAttribute("tab-index");
   });
 
   onClick("#next-steps-tab .tab", function() {
-    document.querySelector("[name=next-step\\[tab\\]]").value = this.getAttribute("tab-index");
+    document.querySelector("[name=next-step\\[tab\\]]").value = e.target.getAttribute("tab-index");
   });
 
   onClick(".tab-sort-filter__sort-toggle", function() {
-    this.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
-    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__filters").classList.remove("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__sorts").classList.toggle("active");
   });
 
   onClick(".tab-sort-filter__filter-toggle", function() {
-    this.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
-    this.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__sorts").classList.remove("active");
+    e.target.parentElement.querySelector(".tab-sort-filter__filters").classList.toggle("active");
   });
 
   onChange("#mns-form .meetings-ajax", function() {
@@ -59,42 +58,39 @@ document.addEventListener("DOMContentLoaded", function(){
     }, ".mns-next-step-list")
   });
 
-  onChange(
-    "#plan-form input, #plan-form select, #plan-form textarea",
-    function() {
-      let m_id = document.querySelector("[name=id]").value;
-      console.log(m_id);
-      let d = toQueryString("#plan-form");
-      console.log(d);
-      console.log($("#plan-form").serialize());
-      ajaxCall({
-        method: "PUT",
-        headers: {'Content-type': 'application/x-www-form-urlencoded'},
-        url: "/plan/save/" + m_id,
-        data: d,
-      })
-    });
-
-  onClick("#plan-form #save-button", function() {
-      let m_id = document.querySelector("[name=id]").value;
-      console.log(m_id);
-      let d = toQueryString("#plan-form");
-      console.log(d);
-      ajaxCall({
-        method: "PUT",
-        headers: {'Content-type': 'application/x-www-form-urlencoded'},
-        url: "/plan/save/" + m_id,
-        data: d,
-      })
+  onChange( "#plan-form input, #plan-form select, #plan-form textarea", function() {
+    planSave();
   });
 
   onClick("#plan-form #add-attendee", function() {
-    document.querySelector(".attendees__col").innerHTML += document.getElementById("new-attendee").innerHTML;
+    document.querySelector(".plan__attendees").innerHTML += document.getElementById("new-attendee").innerHTML;
   });
 
   onClick("#plan-form #add-guest", function() {
-    document.querySelector(".guests__col").innerHTML += document.getElementById("new-guest").innerHTML;
+    document.querySelector(".plan__guests").innerHTML += document.getElementById("new-guest").innerHTML;
   });
+
+  onClick("#plan-form #add-objective", function() {
+    ajaxRequest({
+      url: "/ajax/plan_add_objective",
+      success: function(d) {
+        console.log(d)
+        document.querySelector(".plan__objectives").innerHTML += (d.response);
+      }
+    })
+  })
+
+  onClick("#plan-form #add-day", function() {
+    ajaxRequest({
+      url: "/ajax/plan_add_day",
+      success: function(d) {
+        console.log(d)
+        document.querySelector(".plan__days").innerHTML += (d.response);
+      }
+    })
+  })
+
+
 
   // Handler when the DOM is fully loaded
   console.log("Loaded");
@@ -121,66 +117,6 @@ $(document).ready(function() {
     });
   });
 
-
-
-  $("#plan-form").on("change", "input, select, textarea", function(e) {
-    e.preventDefault();
-    let m_id = $("[name=id]").val();
-    console.log(m_id);
-    $.ajax({
-      url: "/plan/save/" + m_id,
-      data: $("#plan-form").serialize(),
-      method: "PUT",
-      success: function(d, x, t){
-        console.log("Success");
-        $(".flex-fill").html(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-day", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_day",
-      success: function(d, t, x) {
-        $(".days").last().after(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-attendee", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_attendee",
-      success: function(d, t, x) {
-        $(".attendees").last().after(d);
-      }
-    });
-  });
-
-  $(document).on("click", "#plan-form #add-objective", function() {
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_objective",
-      success: function(d, t, x) {
-        $(".objectives").last().after(d);
-      }
-    });
-  });
-  $(document).on("click", "#plan-form #add-agenda-item", function() {
-    let m_id = $(this).attr("m-id");
-    $.ajax({
-      method: "GET",
-      url: "/ajax/plan_add_agenda_item/" + m_id,
-      success: function(d, t, x) {
-        if($(".agenda__items").length) {
-          $(".agenda_items").last().after(d);
-        } else {
-          $(".agenda__day").first().append(d);
-        }
-      }
-    });
-  });
 
 });
 */
