@@ -9,11 +9,15 @@
 
 @section('form')
 
+<div class="plan__objectives">
 @forelse($meeting->objectives as $objective)
 @include('includes.plan.objective')
 @empty
 @include('includes.plan.objective')
 @endforelse
 
-<span id="add-objective">Add objective</span>
+</div>
+
+<span class="plan__add-something button" id="add-objective">Add objective</span>
+
 @endsection

@@ -30,5 +30,5 @@ if(!isset($meeting->agenda_items)) {
 @include('includes.agenda')
 </div>
 
-<span id="add-agenda-item" m-id="{{ $meeting->id }}">Add agenda item</span>
+<span class="plan__add-something button" id="add-agenda-item" m-id="{{ $meeting->id }}">Add agenda item</span>
 @endsection

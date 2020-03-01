@@ -22,6 +22,7 @@ $vars = [
 
 @section('form')
 
+<div class="plan__details">
 @foreach($vars as $label => $value)
   @php $lower_label = strtolower($label) @endphp
   <label class="label label--large" for="{{ $lower_label}}">{{ $label }}</label>
@@ -30,12 +31,16 @@ $vars = [
          id="{{ $lower_label}}"
          value="{{ $value }}"
          placeholder="{{ $label }}">
+  <span class="plan__errors"></span>
 @endforeach
+</div>
 
+<div class="plan__days">
 @forelse($meeting->days as $day)
 @include('includes.plan.day')
 @empty
 @include('includes.plan.day')
 @endforelse
-<span id="add-day">Add another day</span>
+</div>
+<span class="plan__add-something button" id="add-day">Add another day</span>
 @endsection

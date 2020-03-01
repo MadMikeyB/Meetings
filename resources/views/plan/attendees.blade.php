@@ -9,29 +9,25 @@
 
 @section('form')
 
-<fieldset class="attendees">
-  <span class="attendees__col">
+<div class="plan__attendees">
     @forelse($meeting->attendees as $attendee)
       @include('includes.plan.attendee')
     @empty
       @include('includes.plan.attendee')
     @endforelse
-  </span>
-</fieldset>
+</div>
 
-<span id="add-attendee">Add attendee</span>
+<span class="plan__add-something button" id="add-attendee">Add attendee</span>
 
-<fieldset class="guests">
-  <span class="guests__col">
+<div class="plan__guests">
     @forelse($meeting->guests as $guest)
       @include('includes.plan.guest')
     @empty
       @include('includes.plan.guest')
     @endforelse
-  </span>
-</fieldset>
+</div>
 
-<span id="add-guest">Add guest</span>
+<span class="plan__add-something button" id="add-guest">Add guest</span>
 
 <script type="text/template" id="new-attendee">
 @include('includes.plan.attendee')
