@@ -7,11 +7,11 @@ $bigLinks = [
     'routenameprefix' => 'plan.',
     'url' => '/plan',
     'smalls' => [
-      'Details' => '#',
-      'Attendees' => '#',
-      'Objectives' => '#',
-      'Agenda' => '#',
-      'Summary' => '#',
+      'Details' => isset($meeting) ? '/plan/details/'.$meeting->id : '#',
+      'Attendees' => isset($meeting) ? '/plan/attendees/'.$meeting->id : '#',
+      'Objectives' => isset($meeting) ? '/plan/objectives/'.$meeting->id : '#',
+      'Agenda' => isset($meeting) ? '/plan/agenda/'.$meeting->id : '#',
+      'Summary' => isset($meeting) ? '/plan/summary/'.$meeting->id : '#',
     ],
   ],
   'Run a meeting' => [
