@@ -26,4 +26,11 @@ class Day extends UuidModel
   public function agenda_items() {
     return $this->hasMany(AgendaItem::class);
   }
+  protected static function boot() {
+    parent::boot();
+
+    static::deleting(function(Day $day) {
+      $day->agenda_items()->delete();
+    });
+  }
 }
