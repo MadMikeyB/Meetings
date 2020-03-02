@@ -24,7 +24,7 @@ class Day extends UuidModel
   }
 
   public function agenda_items() {
-    return $this->hasMany(AgendaItem::class);
+    return $this->hasMany(AgendaItem::class)->orderBy("position", "ASC");
   }
   protected static function boot() {
     parent::boot();
