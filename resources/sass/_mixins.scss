@@ -39,7 +39,10 @@
   }
 }
 
-@mixin card {
+@mixin card($flex-dir:column) {
   border: 1px solid $black;
   border-radius: 0.5rem;
+  background-color: $white;
+  display: flex;
+  flex-direction: $flex-dir;
 }
