@@ -26,7 +26,8 @@ class PlanMeetingRequest extends FormRequest
         return [
           'name' => 'filled',
           'location' => 'filled',
-          'attendees.*' => 'distinct',
+          'attendees.*' => ['distinct', 'uuid'],
+          'guests.*' => ['distinct', 'email'],
         ];
     }
 }
