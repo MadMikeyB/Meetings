@@ -209,7 +209,6 @@ class PlanController extends Controller
           $item['expected_number_of_minutes'] = 5;
           $item['day_id'] = $day->id;
           $item['position'] = $p++;
-
           $new_item = AgendaItem::create($item);
         }
       }
@@ -217,7 +216,7 @@ class PlanController extends Controller
 
     return view(
       'plan.agenda',
-      compact(["meeting", "uuid"])
+      compact(["meeting"])
     );
   }
 }
