@@ -24,12 +24,8 @@ class AgendaItem extends UuidModel
     'actual_number_of_minutes',
   ];
 
-  public function meeting() {
-    return $this->belongsTo(Meeting::class);
-  }
-
-  public function leader() {
-    return $this->belongsTo(User::class, 'leader_id');
+  public function day() {
+    return $this->belongsTo(Day::class);
   }
 
 }
