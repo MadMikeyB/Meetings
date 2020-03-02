@@ -16,7 +16,7 @@ if(isset($day)) {
 
 <fieldset class="days">
   <input type="hidden" name="days[id][]" value="{{ $id }}">
-  <input type="date" name="days[date][]" value="{{ $date }}">
+  <input type="date" name="days[date][]" value="{{ $date ?? new DateTime('tomorrow') }}">
   <input type="time" name="days[start_at][]" value="{{ $start_at }}">
   <input type="time" name="days[end_at][]" value="{{ $end_at }}">
 </fieldset>
