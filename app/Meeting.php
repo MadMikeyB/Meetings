@@ -107,6 +107,21 @@ class Meeting extends UuidModel
     return $meetings;
   }
 
+  public function item_leaders() {
+    $users = [];
+    foreach(User::whereIn('id', $this->attendees)->get() as $u) {
+      $users[] = $u->name;
+    };
+    $guests = $this->guests;
+
+    $item_leaders = array_merge($users, $guests);
+    $item_leaders[] = $this->user->name;
+    if($this->co_creator) {
+      $item_leaders[] = $this->co_creator->name;
+    }
+    return $item_leaders;
+  }
+
   protected static function boot() {
     parent::boot();
 
