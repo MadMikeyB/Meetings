@@ -20,7 +20,7 @@ class CreateAgendaItemsTable extends Migration
             $table->timestamps();
             $table->integer('type')->comment("See class definition for what the integer means");
             $table->text('name');
-            $table->integer('position');
+            $table->float('position')->comment("Only a float so we can change positions by halves");
             $table->text('additional')->nullable();
             $table->integer('expected_number_of_minutes');
             $table->integer('actual_number_of_minutes')->default(0);
