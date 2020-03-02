@@ -90,6 +90,33 @@ document.addEventListener("DOMContentLoaded", function(){
     })
   })
 
+  onClick("#plan-form #add-agenda-item", function(e) {
+    let day_id = e.target.getAttribute("d_id");
+    let item_type = e.target.getAttribute("i_type");
+    console.log(day_id, item_type);
+    ajaxRequest({
+      url: "/ajax/plan_add_agenda_item/" + day_id + "/" + item_type,
+      success: function(d) {
+        console.log(d)
+        document.querySelector(".agenda").innerHTML = d.response;
+      }
+    })
+  })
+
+  onClick("#plan-form #delete-agenda-item", function(e) {
+    let item_id = e.target.getAttribute("ai_id");
+    ajaxRequest({
+      method: 'DELETE',
+      url: "/ajax/plan_delete_agenda_item/" + item_id,
+      headers: {'Content-type': 'application/x-www-form-urlencoded'},
+      data: "_token=" + document.querySelector("[name=_token]").value,
+      success: function(d) {
+        console.log(d)
+        document.querySelector(".agenda").innerHTML = d.response;
+      }
+    })
+  })
+
 
 
   // Handler when the DOM is fully loaded
