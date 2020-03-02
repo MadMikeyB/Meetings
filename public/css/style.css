@@ -3183,6 +3183,9 @@ fieldset {
 .tab-sort-filter__sorts-filters > div {
   border: 1px solid #000000;
   border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
   padding: 0.5rem 1rem;
 }
 
@@ -3253,6 +3256,9 @@ fieldset {
 .tab-sort-filter__filter-toggle {
   border: 1px solid #000000;
   border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
   padding: 0.5rem 1rem;
   cursor: pointer;
   margin-left: 0.5rem;
@@ -3273,6 +3279,9 @@ fieldset {
   align-items: initial;
   border: 1px solid #000000;
   border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   position: absolute;
   top: 2.5rem;
