@@ -25,7 +25,8 @@
       draggable="true"
       ondragstart="dragTest(event)"
       ondragenter="event.preventDefault()"
-      ondragover="event.preventDefault()"
+      ondragover="dragOverTest(event)"
+      ondragleave="dragLeaveTest(event)"
       ondrop="dropTest(event)"
       @endif
       >
@@ -40,7 +41,7 @@
             value="{{ $item->expected_number_of_minutes ?? ''}}">
       <select name="agenda_items[leader][]">
         @foreach($meeting->item_leaders() as $l)
-          <option {{ $l == $leader ? 'selected' : '' }}>{{ $l }}</option>
+          <option @if($l === $leader) selected @endif>{{ $l }}</option>
         @endforeach
       </select>
       @if($normal_item)
@@ -51,7 +52,10 @@
 
 
 
-
-  <span class="plan__add-something button" id="add-agenda-item" d_id="{{ $day->id }}" i_type="1">Add agenda item</span>
+  <div class="agenda__day__footer">
+    @foreach(["Add agenda item", "Add break", "Add lunch", "Add ice-breaker"] as $i => $b)
+      <span class="plan__add-something button agenda__add-item" id="add-agenda-item" d_id="{{ $day->id }}" i_type="{{ $i + 1}}">{{ $b }}</span>
+    @endforeach
+  </span>
 </div>
 @endforeach

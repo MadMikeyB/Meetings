@@ -107,17 +107,26 @@ class Meeting extends UuidModel
     return $meetings;
   }
 
-  public function item_leaders() {
-    $users = [];
-    foreach(User::whereIn('id', $this->attendees)->get() as $u) {
-      $users[] = $u->name;
-    };
-    $guests = $this->guests;
-
-    $item_leaders = array_merge($users, $guests);
-    $item_leaders[] = $this->user->name;
+  public function all_attendees() {
+    $attendees['creator'][] = $this->user->name;
     if($this->co_creator) {
-      $item_leaders[] = $this->co_creator->name;
+      $attendees['co-creator'][] = $this->co_creator->name;
+    }
+    foreach(User::whereIn('id', $this->attendees)->get() as $u) {
+      $attendees['user'][] = $u->name;
+    };
+    $attendees['guest'] = $this->guests;
+
+
+    return $attendees;
+  }
+
+  public function item_leaders() {
+    $item_leaders = [];
+    foreach($this->all_attendees() as $a) {
+      foreach($a as $l) {
+        $item_leaders[] = $l;
+      }
     }
     return $item_leaders;
   }

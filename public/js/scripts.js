@@ -28,7 +28,14 @@ function dropTest(e) {
 
 function dragOverTest(e) {
   e.preventDefault();
-  console.log("Prevented");
+  console.log("Over Prevented"); //let ai = e.target.closest(".agenda__item");
+  //ai.style.marginTop = "2rem";
+}
+
+function dragLeaveTest(e) {
+  e.preventDefault();
+  console.log("Leave Prevented", e.target); //let ai = e.target.closest(".agenda__item");
+  //ai.style.marginTop = "0rem";
 }
 
 function ajaxReload(obj, selector) {

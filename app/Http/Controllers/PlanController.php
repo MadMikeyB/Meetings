@@ -161,8 +161,6 @@ class PlanController extends Controller
 
   public function agenda(Meeting $meeting)
   {
-    $uuid = Uuid::uuid4()->toString();
-
     $agenda_items = [
       [
         'id' => Uuid::uuid4()->toString(),
@@ -218,5 +216,16 @@ class PlanController extends Controller
       'plan.agenda',
       compact(["meeting"])
     );
+  }
+
+
+  /*
+   *
+   *  SUMMARY
+   *
+   */
+
+  public function summary(Meeting $meeting) {
+    return view('plan.summary', compact(['meeting']));
   }
 }

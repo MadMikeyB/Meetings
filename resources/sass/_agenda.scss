@@ -3,12 +3,24 @@
   &__day {
     @include flex-col;
     border: 1px solid $black;
+
+    &__footer {
+      @include flex-row;
+    }
   }
 
   &__item {
     @include card;
     @include flex-row(space-between, center);
     padding: 1rem;
+  }
+
+  &__add-item {
+    margin-right: 1rem;
+    &:after {
+      content: "+";
+      margin-left: 1rem;
+    }
   }
 
 

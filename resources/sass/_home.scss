@@ -24,11 +24,13 @@
   &__tabs {
     margin-top: auto;
     & > .tab {
-      border-bottom: none;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       padding: 1rem;
       margin-right: 0.3rem;
+      &.active {
+        border-bottom: none;
+      }
     }
 
     &.tab-bar {

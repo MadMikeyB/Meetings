@@ -29,7 +29,7 @@ class Day extends UuidModel
 
   public function reorder_agenda_items() {
     $i = 0;
-    foreach($this->agenda_items as $ai) {
+    foreach($this->agenda_items()->orderBy("position", "ASC")->get() as $ai) {
       $ai->update(["position" => $i++]);
     }
   }

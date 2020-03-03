@@ -127,7 +127,10 @@ class AjaxController extends Controller
   }
 
   public function plan_move_agenda_item(AgendaItem $item_before, AgendaItem $item_after) {
-    $item_before->update(['position' => $item_after->position - 0.5]);
+    $item_before->update([
+      'position' => $item_after->position - 0.5,
+      'day_id' => $item_after->day->id
+    ]);
 
     $day = $item_before->day;
     $meeting = $day->meeting;

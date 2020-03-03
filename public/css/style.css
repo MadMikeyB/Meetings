@@ -3202,11 +3202,14 @@ fieldset {
 }
 
 .tab-sort-filter__tabs > .tab {
-  border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   padding: 1rem;
   margin-right: 0.3rem;
+}
+
+.tab-sort-filter__tabs > .tab.active {
+  border-bottom: none;
 }
 
 .tab-sort-filter__tabs.tab-bar {
@@ -3447,6 +3450,14 @@ fieldset {
   border: 1px solid #000000;
 }
 
+.agenda__day__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: initial;
+  align-items: initial;
+  flex-wrap: initial;
+}
+
 .agenda__item {
   border: 1px solid #000000;
   border-radius: 0.5rem;
@@ -3459,6 +3470,15 @@ fieldset {
   align-items: center;
   flex-wrap: initial;
   padding: 1rem;
+}
+
+.agenda__add-item {
+  margin-right: 1rem;
+}
+
+.agenda__add-item:after {
+  content: "+";
+  margin-left: 1rem;
 }
 
 
