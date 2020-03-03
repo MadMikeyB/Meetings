@@ -228,4 +228,16 @@ class PlanController extends Controller
   public function summary(Meeting $meeting) {
     return view('plan.summary', compact(['meeting']));
   }
+
+
+  /*
+   *
+   *  FINISH
+   *
+   */
+
+  public function finish(Meeting $meeting) {
+    $meeting->update(['is_draft' => 0]);
+    return redirect("/");
+  }
 }

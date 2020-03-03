@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   onClick("#plan-form #add-objective", function () {
     ajaxRequest({
-      url: "/ajax/plan_add_objective",
+      url: "/ajax/plan/add_objective",
       success: function success(d) {
         console.log(d);
         document.querySelector(".plan__objectives").innerHTML += d.response;
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   onClick("#plan-form #add-day", function () {
     ajaxRequest({
-      url: "/ajax/plan_add_day",
+      url: "/ajax/plan/add_day",
       success: function success(d) {
         console.log(d);
         document.querySelector(".plan__days").innerHTML += d.response;
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       },
-      url: "/ajax/plan_add_agenda_item/" + day_id + "/" + item_type,
+      url: "/ajax/plan/add_agenda_item/" + day_id + "/" + item_type,
       success: function success(d) {
         console.log(d);
         document.querySelector(".agenda").innerHTML = d.response;
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var item_id = e.target.getAttribute("ai_id");
     ajaxRequest({
       method: 'DELETE',
-      url: "/ajax/plan_delete_agenda_item/" + item_id,
+      url: "/ajax/plan/delete_agenda_item/" + item_id,
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       },

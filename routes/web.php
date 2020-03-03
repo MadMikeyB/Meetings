@@ -40,6 +40,7 @@ Route::prefix('plan')->name('plan.')->group(function() {
   }
     Route::put('save/{meeting}', 'PlanController@save')->name('save');
     Route::get('delete/{meeting}', 'PlanController@delete')->name('delete');
+    route::get('finish/{meeting}', 'PlanController@finish')->name('finish');
 });
 
 Route::prefix('run')->name('run.')->group(function() {
@@ -47,14 +48,17 @@ Route::prefix('run')->name('run.')->group(function() {
   Route::get('{meeting?}', 'RunController@run')->name('run');
 });
 
-Route::prefix('ajax')->group(function() {
-  Route::get('my_meetings', 'AjaxController@meetings');
-  Route::get('my_next_steps', 'AjaxController@next_steps');
-  Route::get('my_meetings_run', 'AjaxController@run_choose_meetings');
-  Route::get('plan_add_day', 'AjaxController@plan_add_day');
-  Route::get('plan_add_attendee', 'AjaxController@plan_add_attendee');
-  Route::get('plan_add_objective', 'AjaxController@plan_add_objective');
-  Route::post('plan_add_agenda_item/{day}/{item_type}', 'AjaxController@plan_add_agenda_item');
-  Route::delete('plan_delete_agenda_item/{item}', 'AjaxController@plan_delete_agenda_item');
-  Route::put('plan_move_agenda_item/{item_before}/{item_after}', 'AjaxController@plan_move_agenda_item');
+Route::prefix('ajax')->name('ajax.')->group(function() {
+  Route::get('my_meetings', 'AjaxController@meetings')->name('my_meetings');
+  Route::get('my_next_steps', 'AjaxController@next_steps')->name('my_next_steps');
+  Route::get('my_meetings_run', 'AjaxController@run_choose_meetings')->name('my_meetings_run');
+
+  Route::prefix('plan')->name('plan.')->group(function() {
+    Route::get('add_day', 'AjaxController@plan_add_day')->name('add_day');
+    Route::get('add_attendee', 'AjaxController@plan_add_attendee')->name('add_attendee');
+    Route::get('add_objective', 'AjaxController@plan_add_objective')->name('add_objective');
+    Route::post('add_agenda_item/{day}/{item_type}', 'AjaxController@plan_add_agenda_item')->name('add_agenda_item');
+    Route::delete('delete_agenda_item/{item}', 'AjaxController@plan_delete_agenda_item')->name('delete_agenda_item');
+    Route::put('move_agenda_item/{item_before}/{item_after}', 'AjaxController@plan_move_agenda_item')->name('move_agenda_item');
+  });
 });

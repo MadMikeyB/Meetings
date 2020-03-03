@@ -105,6 +105,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
               $ucc = [$meeting->user_id, $meeting->cocreator_id]
               @endphp
               @if(in_array(Auth::user()->id, $ucc))
+              <a href="/plan/details/{{ $meeting->id }}"class="button button--light">Edit meeting</a>
               <div class="button">Run meeting</div>
               @endif
               @break

@@ -19,6 +19,8 @@ class Meeting extends UuidModel
     'additional',
     'attendees',
     'guests',
+    'is_draft',
+    'is_complete',
   ];
 
   protected $casts = [

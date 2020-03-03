@@ -17,6 +17,7 @@ Route::namespace("Api")->name("api.")->group(function() {
     Route::middleware('auth:api')->get('/user', function (Request $request) {
         return $request->user();
     })->name('user');
+    /*
     Route::apiResource('company', 'CompanyController');
     Route::apiResource('meeting', 'MeetingController');
     Route::apiResource('agendaitem', 'AgendaItemController');
@@ -30,4 +31,5 @@ Route::namespace("Api")->name("api.")->group(function() {
     Route::apiResource('note', 'NoteController');
     Route::apiResource('objective', 'ObjectiveController');
     Route::apiResource('token', 'TokenController');
+     */
 });
