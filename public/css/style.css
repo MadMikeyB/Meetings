@@ -3440,7 +3440,25 @@ fieldset {
 }
 
 .agenda__day {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
   border: 1px solid #000000;
+}
+
+.agenda__item {
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: initial;
+  padding: 1rem;
 }
 
 

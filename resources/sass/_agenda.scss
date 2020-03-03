@@ -1,7 +1,14 @@
 .agenda {
 
   &__day {
+    @include flex-col;
     border: 1px solid $black;
+  }
+
+  &__item {
+    @include card;
+    @include flex-row(space-between, center);
+    padding: 1rem;
   }
 
 

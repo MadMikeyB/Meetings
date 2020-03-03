@@ -103,10 +103,8 @@ class AjaxController extends Controller
 
     $new_item_object = AgendaItem::create($new_item);
 
-    $i = 0;
-    foreach($day->agenda_items as $ai) {
-      $ai->update(["position" => $i++]);
-    }
+
+    $day->reorder_agenda_items();
 
     return view(
       'includes.agenda',
@@ -120,10 +118,22 @@ class AjaxController extends Controller
 
     $item->delete();
 
-    $i = 0;
-    foreach($day->agenda_items as $ai) {
-      $ai->update(["position" => $i++]);
-    }
+    $day->reorder_agenda_items();
+
+    return view(
+      'includes.agenda',
+      compact(['meeting'])
+    );
+  }
+
+  public function plan_move_agenda_item(AgendaItem $item_before, AgendaItem $item_after) {
+    $item_before->update(['position' => $item_after->position - 0.5]);
+
+    $day = $item_before->day;
+    $meeting = $day->meeting;
+
+    $day->reorder_agenda_items();
+
 
     return view(
       'includes.agenda',

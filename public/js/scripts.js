@@ -1,3 +1,36 @@
+function dragTest(e) {
+  //if(e.target.matches(".agenda__item")){
+  var ai = e.target.closest(".agenda__item");
+  console.log(ai);
+  e.dataTransfer.setData("text", ai.id); //}
+}
+
+function dropTest(e) {
+  e.preventDefault();
+  console.log("Dropped");
+  var aiDragged = e.dataTransfer.getData("text");
+  var aiDropped = e.target.closest(".agenda__item").id;
+  console.log(aiDragged, aiDropped);
+  console.log(e);
+  ajaxRequest({
+    method: 'PUT',
+    url: "/ajax/plan_move_agenda_item/" + aiDragged + "/" + aiDropped,
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    data: "_token=" + document.querySelector("[name=_token]").value,
+    success: function success(d) {
+      //console.log(d)
+      document.querySelector(".agenda").innerHTML = d.response;
+    }
+  });
+}
+
+function dragOverTest(e) {
+  e.preventDefault();
+  console.log("Prevented");
+}
+
 function ajaxReload(obj, selector) {
   var method = obj.method ? obj.method : 'GET';
   var url = obj.url;
@@ -224,6 +257,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var item_type = e.target.getAttribute("i_type");
     console.log(day_id, item_type);
     ajaxRequest({
+      method: 'POST',
+      data: "_token=" + document.querySelector("[name=_token]").value,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      },
       url: "/ajax/plan_add_agenda_item/" + day_id + "/" + item_type,
       success: function success(d) {
         console.log(d);

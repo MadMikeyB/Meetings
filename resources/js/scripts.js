@@ -95,6 +95,9 @@ document.addEventListener("DOMContentLoaded", function(){
     let item_type = e.target.getAttribute("i_type");
     console.log(day_id, item_type);
     ajaxRequest({
+      method: 'POST',
+      data: "_token=" + document.querySelector("[name=_token]").value,
+      headers: {'Content-type': 'application/x-www-form-urlencoded'},
       url: "/ajax/plan_add_agenda_item/" + day_id + "/" + item_type,
       success: function(d) {
         console.log(d)

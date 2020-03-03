@@ -26,6 +26,14 @@ class Day extends UuidModel
   public function agenda_items() {
     return $this->hasMany(AgendaItem::class)->orderBy("position", "ASC");
   }
+
+  public function reorder_agenda_items() {
+    $i = 0;
+    foreach($this->agenda_items as $ai) {
+      $ai->update(["position" => $i++]);
+    }
+  }
+
   protected static function boot() {
     parent::boot();
 
