@@ -18,11 +18,11 @@ Route::get('', function () {
 Auth::routes();
 
 Route::name('home.')->group(function() {
-  Route::get('dashboard', 'HomeController@index')->name('dashboard');
-  Route::get('meetings', 'HomeController@indexMeetings')->name('meetings');
-  Route::get('next_steps', 'HomeController@indexNextSteps')->name('next_steps');
-  Route::get('contacts', 'HomeController@indexContacts')->name('contacts');
-  Route::get('account', 'HomeController@accountDetails')->name('account');
+  Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+  Route::get('meetings', 'HomeController@meetings')->name('meetings');
+  Route::get('next_steps', 'HomeController@next_steps')->name('next_steps');
+  Route::get('contacts', 'HomeController@contacts')->name('contacts');
+  Route::get('account', 'HomeController@account')->name('account');
   Route::name('help.')->group(function() {
   });
 });
@@ -45,7 +45,7 @@ Route::prefix('plan')->name('plan.')->group(function() {
 
 Route::prefix('run')->name('run.')->group(function() {
   Route::get('', 'RunController@choose')->name('choose');
-  Route::get('{meeting?}', 'RunController@run')->name('run');
+  Route::get('{meeting}/{item?}', 'RunController@run')->name('run');
 });
 
 Route::prefix('ajax')->name('ajax.')->group(function() {

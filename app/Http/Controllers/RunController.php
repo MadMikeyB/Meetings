@@ -19,4 +19,11 @@ class RunController extends Controller
       compact(["meetings", "params"])
     );
   }
+
+  public function run(Meeting $meeting, int $item_index = 0) {
+    return view(
+      "run.run",
+      compact(["meeting","item_index"])
+    );
+  }
 }
