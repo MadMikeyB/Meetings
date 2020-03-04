@@ -3065,6 +3065,7 @@ fieldset {
   max-width: 25rem;
   background-color: #f6993f;
   color: #ffffff;
+  overflow-y: scroll;
 }
 
 .navbar > *:not(:first-child) {
@@ -3398,6 +3399,13 @@ fieldset {
 .dashboard [class*=ajax] + .button {
   margin-top: 1rem;
   margin-left: auto;
+}
+
+.account.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: initial;
 }
 
 #plan-form {
