@@ -2,11 +2,12 @@
 $meeting_tab = $params['meeting']['tab'] ?? 0;
 $sort_type = $params['meeting']['sort'] ?? 'name_asc';
 $filter_type = $params['meeting']['filter'] ?? [];
+$multi_tabs = count($meetings) > 1;
 @endphp
 
 <h2>My Meetings</h2>
 <div class="tab-sort-filter">
-  @if(count($meetings) > 1)
+  @if($multi_tabs)
   <span class="tab-sort-filter__tabs tab-bar" id="meetings-tab">
     @foreach($meetings as $tab_name => $tab)
       <div class="tab {{ $loop->index==$meeting_tab?'active':''}}" tab-index="{{ $loop->index }}">{{ $tab_name }}</div>
@@ -99,6 +100,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
             </span>
           </div>
           <div class="meeting__right">
+            <div class="meeting__buttons">
           @switch($tab_name)
             @case("Upcoming Meetings")
               @php
@@ -117,6 +119,7 @@ $filter_type = $params['meeting']['filter'] ?? [];
               <div class="button">Review meeting</div>
               @break
           @endswitch 
+            </div>
           </div>
         </div>
         @empty
