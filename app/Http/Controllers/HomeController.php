@@ -24,7 +24,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function dashboard(Request $request)
     {
       $user = Auth::user();
       $params = $request->all();
@@ -49,7 +49,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function indexMeetings(Request $request)
+    public function meetings(Request $request)
     {
       $params = $request->all();
 
@@ -69,7 +69,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function indexNextSteps(Request $request)
+    public function next_steps(Request $request)
     {
       $params = $request->all();
 
@@ -99,6 +99,14 @@ class HomeController extends Controller
     
     }
 
+    public function account()
+    {
+      $user = Auth::user();
+      return view(
+        'dashboard.account',
+        compact(['user'])
+      );
+    }
 
 
 }
