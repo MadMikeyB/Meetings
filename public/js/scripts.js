@@ -1,43 +1,3 @@
-function dragTest(e) {
-  //if(e.target.matches(".agenda__item")){
-  var ai = e.target.closest(".agenda__item");
-  console.log(ai);
-  e.dataTransfer.setData("text", ai.id); //}
-}
-
-function dropTest(e) {
-  e.preventDefault();
-  console.log("Dropped");
-  var aiDragged = e.dataTransfer.getData("text");
-  var aiDropped = e.target.closest(".agenda__item").id;
-  console.log(aiDragged, aiDropped);
-  console.log(e);
-  ajaxRequest({
-    method: 'PUT',
-    url: "/ajax/plan_move_agenda_item/" + aiDragged + "/" + aiDropped,
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded'
-    },
-    data: "_token=" + document.querySelector("[name=_token]").value,
-    success: function success(d) {
-      //console.log(d)
-      document.querySelector(".agenda").innerHTML = d.response;
-    }
-  });
-}
-
-function dragOverTest(e) {
-  e.preventDefault();
-  console.log("Over Prevented"); //let ai = e.target.closest(".agenda__item");
-  //ai.style.marginTop = "2rem";
-}
-
-function dragLeaveTest(e) {
-  e.preventDefault();
-  console.log("Leave Prevented", e.target); //let ai = e.target.closest(".agenda__item");
-  //ai.style.marginTop = "0rem";
-}
-
 function ajaxReload(obj, selector) {
   var method = obj.method ? obj.method : 'GET';
   var url = obj.url;
@@ -179,6 +139,52 @@ function planSave() {
     }
   });
 }
+/*
+ *  These are function definitions yes.
+ *  However they are only used for the dragging
+ *  and dropping of agenda items, so they go in here
+ */
+
+
+function dragTest(e) {
+  //if(e.target.matches(".agenda__item")){
+  var ai = e.target.closest(".agenda__item");
+  console.log(ai);
+  e.dataTransfer.setData("text", ai.id); //}
+}
+
+function dropTest(e) {
+  e.preventDefault();
+  console.log("Dropped");
+  var aiDragged = e.dataTransfer.getData("text");
+  var aiDropped = e.target.closest(".agenda__item").id;
+  console.log(aiDragged, aiDropped);
+  console.log(e);
+  ajaxRequest({
+    method: 'PUT',
+    url: "/ajax/agenda/move_item/" + aiDragged + "/" + aiDropped,
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    data: "_token=" + document.querySelector("[name=_token]").value,
+    success: function success(d) {
+      //console.log(d)
+      document.querySelector(".agenda").innerHTML = d.response;
+    }
+  });
+}
+
+function dragOverTest(e) {
+  e.preventDefault();
+  console.log("Over Prevented"); //let ai = e.target.closest(".agenda__item");
+  //ai.style.marginTop = "2rem";
+}
+
+function dragLeaveTest(e) {
+  e.preventDefault();
+  console.log("Leave Prevented", e.target); //let ai = e.target.closest(".agenda__item");
+  //ai.style.marginTop = "0rem";
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   // Tabbing around
@@ -256,6 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function success(d) {
         console.log(d);
         document.querySelector(".plan__days").innerHTML += d.response;
+        planSave();
       }
     });
   });
@@ -269,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       },
-      url: "/ajax/plan/add_agenda_item/" + day_id + "/" + item_type,
+      url: "/ajax/agenda/add_item/" + day_id + "/" + item_type,
       success: function success(d) {
         console.log(d);
         document.querySelector(".agenda").innerHTML = d.response;
@@ -280,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var item_id = e.target.getAttribute("ai_id");
     ajaxRequest({
       method: 'DELETE',
-      url: "/ajax/plan/delete_agenda_item/" + item_id,
+      url: "/ajax/agenda/delete_item/" + item_id,
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       },
