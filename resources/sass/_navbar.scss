@@ -5,6 +5,7 @@
   max-width: 25rem;
   background-color: $orange;
   color: $white;
+  overflow-y: scroll;
 
   & > * {
     &:not(:first-child) {
