@@ -116,8 +116,8 @@
   .card {
     flex: 1;
     min-width: 99%;
-    border-top-left-radius: 0;
     @include medium {
+      border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
   }
@@ -141,9 +141,15 @@
     &__right {
       @include flex-row(flex-end, center);
     }
+    &__buttons {
+      @include flex-row;
+      .button:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
   }
 
-  .tab-body-bar {
+  .tab-bar ~ .tab-body-bar {
     border-top-left-radius: 0;
   }
 }
