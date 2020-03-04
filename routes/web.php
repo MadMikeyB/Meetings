@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('', function () {
   return redirect('dashboard');
@@ -28,7 +28,7 @@ Route::name('home.')->group(function() {
 });
 
 Route::prefix('plan')->name('plan.')->group(function() {
-    Route::get('', 'PlanController@create')->name('create');
+  Route::get('', 'PlanController@create')->name('create');
   foreach([
     "details",
     "attendees",
@@ -36,11 +36,11 @@ Route::prefix('plan')->name('plan.')->group(function() {
     "objectives",
     "summary"
   ] as $step) {
-    Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
+  Route::get($step.'/{meeting}', 'PlanController@'.$step)->name($step);
   }
-    Route::put('save/{meeting}', 'PlanController@save')->name('save');
-    Route::get('delete/{meeting}', 'PlanController@delete')->name('delete');
-    route::get('finish/{meeting}', 'PlanController@finish')->name('finish');
+  Route::put('save/{meeting}', 'PlanController@save')->name('save');
+  Route::get('delete/{meeting}', 'PlanController@delete')->name('delete');
+  route::get('finish/{meeting}', 'PlanController@finish')->name('finish');
 });
 
 Route::prefix('run')->name('run.')->group(function() {
@@ -57,8 +57,11 @@ Route::prefix('ajax')->name('ajax.')->group(function() {
     Route::get('add_day', 'AjaxController@plan_add_day')->name('add_day');
     Route::get('add_attendee', 'AjaxController@plan_add_attendee')->name('add_attendee');
     Route::get('add_objective', 'AjaxController@plan_add_objective')->name('add_objective');
-    Route::post('add_agenda_item/{day}/{item_type}', 'AjaxController@plan_add_agenda_item')->name('add_agenda_item');
-    Route::delete('delete_agenda_item/{item}', 'AjaxController@plan_delete_agenda_item')->name('delete_agenda_item');
-    Route::put('move_agenda_item/{item_before}/{item_after}', 'AjaxController@plan_move_agenda_item')->name('move_agenda_item');
+  });
+
+  Route::prefix('agenda')->name('agenda.')->group(function() {
+    Route::post('add_item/{day}/{item_type}', 'AjaxController@plan_add_agenda_item')->name('add_agenda_item');
+    Route::delete('delete_item/{item}', 'AjaxController@plan_delete_agenda_item')->name('delete_agenda_item');
+    Route::put('move_item/{item_before}/{item_after}', 'AjaxController@plan_move_agenda_item')->name('move_agenda_item');
   });
 });
