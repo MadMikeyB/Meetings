@@ -56,7 +56,7 @@ class Meeting extends UuidModel
     return $this->hasMany(Day::class)->orderBy('date', 'asc');
   }
   public function agenda_items() {
-    return $this->hasManyThrough(AgendaItem::class, Day::class);
+    return $this->hasManyThrough(AgendaItem::class, Day::class)->orderBy("days.date", "ASC")->orderBy("position", "ASC");
   }
 
   public static function get_for_page($params, $user) {
