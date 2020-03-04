@@ -163,6 +163,10 @@
     margin-top: 1rem;
     margin-left: auto;
   }
+}
 
-
+.account {
+  &.container {
+    @include flex-col;
+  }
 }
