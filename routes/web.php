@@ -11,9 +11,7 @@
 |
  */
 
-Route::get('', function () {
-  return redirect('dashboard');
-});
+Route::permanentRedirect('', 'dashboard');
 
 Auth::routes();
 
