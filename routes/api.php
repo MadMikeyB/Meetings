@@ -18,17 +18,19 @@ Route::namespace("Api")->name("api.")->group(function() {
         return $request->user();
     })->name('user');
     if(0) {
-      Route::apiResource('company', 'CompanyController');
-      Route::apiResource('meeting', 'MeetingController');
-      Route::apiResource('agendaitem', 'AgendaItemController');
-      Route::apiResource('benefit', 'BenefitController');
-      Route::apiResource('concern', 'ConcernController');
-      Route::apiResource('day', 'DayController');
-      Route::apiResource('decision', 'DecisionController');
-      Route::apiResource('expectation', 'ExpectationController');
-      Route::apiResource('nextstep', 'NextStepController');
-      Route::apiResource('note', 'NoteController');
-      Route::apiResource('objective', 'ObjectiveController');
-      Route::apiResource('token', 'TokenController');
+      Route::apiResources([
+        'company' => 'CompanyController',
+        'meeting' => 'MeetingController',
+        'agendaitem' => 'AgendaItemController',
+        'benefit' => 'BenefitController',
+        'concern' => 'ConcernController',
+        'day' => 'DayController',
+        'decision' => 'DecisionController',
+        'expectation' => 'ExpectationController',
+        'nextstep' => 'NextStepController',
+        'note' => 'NoteController',
+        'objective' => 'ObjectiveController',
+        'token' => 'TokenController',
+      ]);
     }
 });
